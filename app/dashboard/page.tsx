@@ -197,6 +197,71 @@ export default function Dashboard() {
           fr: 'Revue Expérience Sportive'
         }
       }
+    },
+    settings: {
+      password: {
+        title: {
+          ar: 'تغيير كلمة المرور',
+          en: 'Change Password',
+          fr: 'Changer le Mot de Passe'
+        },
+        change: {
+          ar: 'كلمة المرور الجديدة',
+          en: 'New Password',
+          fr: 'Nouveau Mot de Passe'
+        },
+        confirm: {
+          ar: 'تأكيد كلمة المرور',
+          en: 'Confirm Password',
+          fr: 'Confirmer le Mot de Passe'
+        },
+        update: {
+          ar: 'تحديث كلمة المرور',
+          en: 'Update Password',
+          fr: 'Mettre à Jour le Mot de Passe'
+        },
+        changePlaceholder: {
+          ar: 'أدخل كلمة المرور الجديدة...',
+          en: 'Enter the new password...',
+          fr: 'Entrez le nouveau mot de passe...'
+        },
+        confirmPlaceholder: {
+          ar: 'أدخل تأكيد كلمة المرور...',
+          en: 'Enter the password confirmation...',
+          fr: 'Entrez la confirmation du mot de passe...'
+        }
+      },
+      notifications: {
+        title: {
+          ar: 'إعدادات الإشعارات',
+          en: 'Notifications Settings',
+          fr: 'Paramètres des Notifications'
+        },
+        email: {
+          title: {
+            ar: 'البريد الإلكتروني',
+            en: 'Email',
+            fr: 'Email'
+          },
+          description: {
+            ar: 'تلقي الإشعارات عبر البريد الإلكتروني',
+            en: 'Receive notifications via email',
+            fr: 'Recevoir les notifications par email'
+          }
+        },
+        push: {
+          title: {
+            ar: 'الإشعارات الصوتية',
+            en: 'Push Notifications',
+            fr: 'Notifications Push'
+          },
+          description: {
+            ar: 'تلقي الإشعارات الصوتية',
+            en: 'Receive push notifications',
+            fr: 'Recevoir les notifications push'
+          }
+        }
+      }
     }
   };
 
@@ -205,7 +270,8 @@ export default function Dashboard() {
       { id: 'overview', label: translations.navigation.overview[language], icon: BarChart3 },
       { id: 'projects', label: translations.navigation.projects[language], icon: Package },
       { id: 'messages', label: translations.navigation.messages[language], icon: MessageSquare },
-      { id: 'profile', label: translations.navigation.profile[language], icon: Users }
+      { id: 'profile', label: translations.navigation.profile[language], icon: Users },
+      { id: 'settings', label: translations.navigation.settings[language], icon: Settings }
     ],
     creator: [
       { id: 'overview', label: translations.navigation.overview[language], icon: BarChart3 },
@@ -401,11 +467,11 @@ export default function Dashboard() {
                         <h3 className="text-2xl font-bold">{stat.value}</h3>
                       </div>
                       <div className={`p-3 rounded-full flex-shrink-0 ${stat.id === 'revenue' ? 'bg-green-100 text-green-600' :
-                          stat.id === 'projects' ? 'bg-blue-100 text-blue-600' :
-                            stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
-                              stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
-                                stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
-                                  'bg-orange-100 text-orange-600'
+                        stat.id === 'projects' ? 'bg-blue-100 text-blue-600' :
+                          stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
+                            stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
+                              stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
+                                'bg-orange-100 text-orange-600'
                         }`}>
                         <stat.icon className="h-6 w-6" />
                       </div>
@@ -644,6 +710,44 @@ export default function Dashboard() {
                   </div>
                   <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
                     تحديث كلمة المرور
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Settings Tab */}
+          {activeTab === 'settings' && (
+            <div>
+              <h1 className="text-2xl font-bold mb-6">{translations.navigation.settings[language]}</h1>
+
+              <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
+                <div>
+                  <h3 className="text-lg font-bold mb-4">{translations.settings.password.title[language]}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm text-gray-500 mb-1">
+                        {translations.settings.password.change[language]}
+                      </label>
+                      <input
+                        type="password"
+                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                        placeholder={translations.settings.password.changePlaceholder[language]}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-500 mb-1">
+                        {translations.settings.password.confirm[language]}
+                      </label>
+                      <input
+                        type="password"
+                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                        placeholder={translations.settings.password.confirmPlaceholder[language]}
+                      />
+                    </div>
+                  </div>
+                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
+                    {translations.settings.password.update[language]}
                   </button>
                 </div>
               </div>
