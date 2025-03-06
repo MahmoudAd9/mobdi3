@@ -184,24 +184,24 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-16 px-6 bg-gradient-to-b from-purple-50 to-white">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-right">
+          <div className={`${language === 'ar' ? 'text-right' : 'text-left'}`}>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
               {translations.hero.title[language]}
             </h1>
             <p className="text-lg text-gray-600 mb-8">
               {translations.hero.subtitle[language]}
             </p>
-            <Link 
-              href="/signup" 
+            <Link
+              href="/signup"
               className="inline-block bg-purple-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {translations.hero.cta[language]}
             </Link>
           </div>
           <div className="relative h-[400px] rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
-            <Image 
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80" 
-              alt="صانعة محتوى تقوم بتسجيل فيديو"
+            <Image
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
+              alt="Content creator recording a video"
               fill
               className="object-cover"
             />
@@ -212,11 +212,13 @@ export default function Home() {
       {/* How It Works Section */}
       <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">{translations.howItWorks.title[language]}</h2>
-          
+          <h2 className={`text-3xl font-bold mb-16 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+            {translations.howItWorks.title[language]}
+          </h2>
+
           <div className="grid md:grid-cols-3 gap-8">
             {translations.howItWorks.steps.map((step, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+              <div key={index} className={`bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                 <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     {index === 0 && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />}
@@ -237,25 +239,25 @@ export default function Home() {
       {/* Testimonials Section */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">{translations.testimonials.title[language]}</h2>
-          
+          <h2 className={`text-3xl font-bold mb-16 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+            {translations.testimonials.title[language]}
+          </h2>
+
           <div className="grid md:grid-cols-2 gap-8">
             {translations.testimonials.items.map((testimonial, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                <div className="flex mb-4">
+              <div key={index} className={`bg-white p-8 rounded-lg shadow-md border border-gray-100 hover:shadow-xl transition-shadow duration-300 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                <div className={`flex mb-4 ${language === 'ar' ? 'justify-end' : 'justify-start'}`}>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className="h-5 w-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
                 <blockquote className="text-gray-700 mb-6">
-                  <p className="text-lg mb-4">
-                    {testimonial.text[language]}
-                  </p>
-                  <footer className="font-medium">
-                    <div className="text-gray-900">{testimonial.author[language]}</div>
-                    <div className="text-purple-600 text-sm">{testimonial.role[language]}</div>
-                  </footer>
+                  {testimonial.text[language]}
                 </blockquote>
+                <div>
+                  <p className="font-bold text-gray-900">{testimonial.author[language]}</p>
+                  <p className="text-gray-600">{testimonial.role[language]}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -268,14 +270,14 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-6">{translations.cta.title[language]}</h2>
           <p className="text-xl mb-8">{translations.cta.subtitle[language]}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/signup" 
+            <Link
+              href="/signup"
               className="bg-white text-purple-600 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {translations.cta.createAccount[language]}
             </Link>
-            <Link 
-              href="/about" 
+            <Link
+              href="/about"
               className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-white/10 transition-colors"
             >
               {translations.cta.learnMore[language]}

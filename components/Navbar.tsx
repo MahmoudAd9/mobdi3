@@ -10,7 +10,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language } = useLanguage();
-  const isAuthenticated = true; // This should be replaced with actual auth state
+  const isAuthenticated = false; // Set to false to show sign in/sign up buttons
 
   return (
     <nav className="bg-white py-4 px-6 shadow-sm font-tajawal">
@@ -37,42 +37,22 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
           <LanguageSwitcher />
-          {isAuthenticated ? (
-            <Link
-              href="/brand/dashboard"
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-              title={getTranslation(language, 'dashboard')}
-            >
-              <User className="h-5 w-5 text-gray-700" />
-            </Link>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="px-4 py-2 rounded-md text-purple-600 hover:bg-purple-50 transition-colors"
-              >
-                {getTranslation(language, 'login')}
-              </Link>
-              <Link
-                href="/signup"
-                className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md hover:shadow-lg transition-all"
-              >
-                {getTranslation(language, 'createAccount')}
-              </Link>
-            </>
-          )}
+          <Link
+            href="/login"
+            className="px-4 py-2 rounded-md text-purple-600 hover:bg-purple-50 transition-colors"
+          >
+            {getTranslation(language, 'login')}
+          </Link>
+          <Link
+            href="/signup"
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md hover:shadow-lg transition-all"
+          >
+            {getTranslation(language, 'createAccount')}
+          </Link>
         </div>
 
         <div className="md:hidden flex items-center space-x-2 rtl:space-x-reverse">
           <LanguageSwitcher />
-          {isAuthenticated && (
-            <Link
-              href="/brand/dashboard"
-              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-            >
-              <User className="h-5 w-5 text-gray-700" />
-            </Link>
-          )}
           <button
             className="text-gray-700"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -99,22 +79,20 @@ const Navbar = () => {
             <Link href="/brands" className="text-gray-700 hover:text-purple-600 transition-colors">
               {getTranslation(language, 'brands')}
             </Link>
-            {!isAuthenticated && (
-              <div className="pt-4 border-t border-gray-200">
-                <Link
-                  href="/login"
-                  className="block w-full text-center px-4 py-2 mb-2 rounded-md text-purple-600 border border-purple-600 transition-colors"
-                >
-                  {getTranslation(language, 'login')}
-                </Link>
-                <Link
-                  href="/signup"
-                  className="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-md transition-colors"
-                >
-                  {getTranslation(language, 'createAccount')}
-                </Link>
-              </div>
-            )}
+            <div className="pt-4 border-t border-gray-200">
+              <Link
+                href="/login"
+                className="block w-full text-center px-4 py-2 mb-2 rounded-md text-purple-600 border border-purple-600 transition-colors"
+              >
+                {getTranslation(language, 'login')}
+              </Link>
+              <Link
+                href="/signup"
+                className="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-md transition-colors"
+              >
+                {getTranslation(language, 'createAccount')}
+              </Link>
+            </div>
           </div>
         </div>
       )}
