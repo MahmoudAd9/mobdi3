@@ -10,7 +10,7 @@ export default function Creators() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const { language } = useLanguage();
-  
+
   const translations = {
     hero: {
       title: {
@@ -106,7 +106,7 @@ export default function Creators() {
       }
     }
   };
-  
+
   const categories = [
     { id: 'all', name: translations.categories.all[language] },
     { id: 'beauty', name: translations.categories.beauty[language] },
@@ -116,11 +116,15 @@ export default function Creators() {
     { id: 'fitness', name: translations.categories.fitness[language] },
     { id: 'gaming', name: translations.categories.gaming[language] },
   ];
-  
+
   const creators = [
     {
       id: 1,
-      name: 'أحمد محمد',
+      name: {
+        ar: 'أحمد محمد',
+        en: 'Ahmed Mohamed',
+        fr: 'Ahmed Mohamed'
+      },
       image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'tech',
       rating: 4.8,
@@ -135,7 +139,11 @@ export default function Creators() {
     },
     {
       id: 2,
-      name: 'سارة أحمد',
+      name: {
+        ar: 'سارة أحمد',
+        en: 'Sarah Ahmed',
+        fr: 'Sarah Ahmed'
+      },
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'beauty',
       rating: 4.9,
@@ -150,7 +158,11 @@ export default function Creators() {
     },
     {
       id: 3,
-      name: 'محمد علي',
+      name: {
+        ar: 'محمد علي',
+        en: 'Mohamed Ali',
+        fr: 'Mohamed Ali'
+      },
       image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'fitness',
       rating: 4.7,
@@ -165,7 +177,11 @@ export default function Creators() {
     },
     {
       id: 4,
-      name: 'نورا خالد',
+      name: {
+        ar: 'نورا خالد',
+        en: 'Noura Khaled',
+        fr: 'Noura Khaled'
+      },
       image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'fashion',
       rating: 4.6,
@@ -180,7 +196,11 @@ export default function Creators() {
     },
     {
       id: 5,
-      name: 'خالد الناصري',
+      name: {
+        ar: 'خالد الناصري',
+        en: 'Khaled Al-Naseri',
+        fr: 'Khaled Al-Naseri'
+      },
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'food',
       rating: 4.5,
@@ -195,7 +215,11 @@ export default function Creators() {
     },
     {
       id: 6,
-      name: 'ليلى عمر',
+      name: {
+        ar: 'ليلى عمر',
+        en: 'Layla Omar',
+        fr: 'Layla Omar'
+      },
       image: 'https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'gaming',
       rating: 4.7,
@@ -209,12 +233,13 @@ export default function Creators() {
       verified: false,
     },
   ];
-  
+
   const filteredCreators = creators.filter(creator => {
-    const matchesSearch = creator.name.includes(searchTerm) || 
-                          creator.description[language].includes(searchTerm);
+    const matchesSearch =
+      creator.name[language].toLowerCase().includes(searchTerm.toLowerCase()) ||
+      creator.description[language].toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || creator.category === selectedCategory;
-    
+
     return matchesSearch && matchesCategory;
   });
 
@@ -229,11 +254,11 @@ export default function Creators() {
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
             {translations.hero.subtitle[language]}
           </p>
-          
+
           <div className="relative max-w-2xl mx-auto">
             <input
               type="text"
-              className="w-full py-4 px-6 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className="w-full py-4 px-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               placeholder={translations.hero.searchPlaceholder[language]}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -250,11 +275,10 @@ export default function Creators() {
             {categories.map(category => (
               <button
                 key={category.id}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category.id
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  }`}
                 onClick={() => setSelectedCategory(category.id)}
               >
                 {category.name}
@@ -271,9 +295,9 @@ export default function Creators() {
             {filteredCreators.map(creator => (
               <div key={creator.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="relative h-[250px]">
-                  <Image 
-                    src={creator.image} 
-                    alt={creator.name}
+                  <Image
+                    src={creator.image}
+                    alt={creator.name[language]}
                     fill
                     className="object-cover"
                   />
@@ -290,13 +314,13 @@ export default function Creators() {
                 </div>
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-xl font-bold">{creator.name}</h3>
+                    <h3 className="text-xl font-bold">{creator.name[language]}</h3>
                     <span className="text-gray-500 text-sm">{creator.followers} {translations.creator.followers[language]}</span>
                   </div>
                   <p className="text-gray-600 mb-4 line-clamp-2">{creator.description[language]}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-purple-600 font-bold">{creator.price} {translations.creator.perReview[language]}</span>
-                    <Link 
+                    <Link
                       href={`/creators/${creator.id}`}
                       className="bg-purple-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-700 transition-colors"
                     >
@@ -315,8 +339,8 @@ export default function Creators() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">{translations.cta.title[language]}</h2>
           <p className="text-xl mb-8">{translations.cta.subtitle[language]}</p>
-          <Link 
-            href="/signup" 
+          <Link
+            href="/signup"
             className="bg-white text-purple-600 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             {translations.cta.button[language]}
