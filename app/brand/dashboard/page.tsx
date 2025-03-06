@@ -181,35 +181,71 @@ export default function BrandDashboard() {
   const recentProjects = [
     {
       id: 1,
-      title: 'سماعة لاسلكية جديدة',
+      title: {
+        ar: 'سماعة لاسلكية جديدة',
+        en: 'New Wireless Headphones',
+        fr: 'Nouveaux Écouteurs Sans Fil'
+      },
       client: 'TechWorld Electronics',
-      type: 'مراجعة تقنية',
+      type: {
+        ar: 'مراجعة تقنية',
+        en: 'Technical Review',
+        fr: 'Évaluation Technique'
+      },
       status: 'new',
       price: '$200',
       date: '2025-04-15',
-      description: 'التركيز على جودة الصوت وعمر البطارية',
+      description: {
+        ar: 'التركيز على جودة الصوت وعمر البطارية',
+        en: 'Focus on sound quality and battery life',
+        fr: 'Accent sur la qualité sonore et l\'autonomie'
+      },
       statusColor: 'bg-blue-100 text-blue-600',
     },
     {
       id: 2,
-      title: 'أحمر شفاه جديد',
+      title: {
+        ar: 'أحمر شفاه جديد',
+        en: 'New Lipstick',
+        fr: 'Nouveau Rouge à Lèvres'
+      },
       client: 'GlowBeauty Cosmetics',
-      type: 'فيديو تجربة المنتج',
+      type: {
+        ar: 'فيديو تجربة المنتج',
+        en: 'Product Review Video',
+        fr: 'Vidéo Test Produit'
+      },
       status: 'pending',
       price: '$300',
       date: '2025-04-10',
-      description: 'إظهار الألوان المختلفة وإبراز مقاومته للماء',
+      description: {
+        ar: 'إظهار الألوان المختلفة وإبراز مقاومته للماء',
+        en: 'Showcase different colors and waterproof features',
+        fr: 'Présentation des différentes couleurs et de la résistance à l\'eau'
+      },
       statusColor: 'bg-yellow-100 text-yellow-600',
     },
     {
       id: 3,
-      title: 'حذاء رياضي جديد',
+      title: {
+        ar: 'حذاء رياضي جديد',
+        en: 'New Running Shoes',
+        fr: 'Nouvelles Chaussures de Course'
+      },
       client: 'FastFit Sportswear',
-      type: 'مراجعة تجربة أثناء التمرين',
+      type: {
+        ar: 'مراجعة تجربة أثناء التمرين',
+        en: 'Workout Experience Review',
+        fr: 'Test d\'Expérience d\'Entraînement'
+      },
       status: 'completed',
       price: '$250',
       date: '2025-04-05',
-      description: 'التركيز على الراحة والخفة أثناء الجري',
+      description: {
+        ar: 'التركيز على الراحة والخفة أثناء الجري',
+        en: 'Focus on comfort and lightness while running',
+        fr: 'Accent sur le confort et la légèreté pendant la course'
+      },
       statusColor: 'bg-green-100 text-green-600',
     },
   ];
@@ -289,21 +325,21 @@ export default function BrandDashboard() {
             <div className="relative h-24 w-24 rounded-full overflow-hidden mx-auto mb-4">
               <Image
                 src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                alt={language === 'ar' ? "صورة الملف الشخصي" : language === 'fr' ? "Photo de profil" : "Profile picture"}
+                alt="شعار الشركة"
                 fill
                 className="object-cover"
               />
             </div>
             <h3 className="text-xl font-bold">Asma Ahmed</h3>
-            <p className="text-gray-500 text-xs uppercase tracking-wider font-medium mb-1">cod network</p>
+            <p className="text-gray-500 text-sm uppercase tracking-wide">cod network</p>
             <p className="text-gray-500 text-sm">asma@gmail.com</p>
           </div>
 
           <nav className="space-y-2">
             <button
               className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'overview'
-                  ? 'bg-purple-100 text-purple-600'
-                  : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-purple-100 text-purple-600'
+                : 'text-gray-600 hover:bg-gray-100'
                 }`}
               onClick={() => setActiveTab('overview')}
             >
@@ -417,33 +453,57 @@ export default function BrandDashboard() {
               </div>
               <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.project[language]}</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.client[language]}</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.type[language]}</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.price[language]}</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.status[language]}</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{translations.recentProjects.date[language]}</th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.project[language]}
+                        </th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.client[language]}
+                        </th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.type[language]}
+                        </th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.price[language]}
+                        </th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.status[language]}
+                        </th>
+                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                          {translations.recentProjects.date[language]}
+                        </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {recentProjects.map(project => (
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {recentProjects.map((project) => (
                         <tr key={project.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">{project.title}</div>
-                            <div className="text-xs text-gray-500">{project.description}</div>
+                            <div className="text-sm font-medium text-gray-900">
+                              {project.title[language]}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {project.description[language]}
+                            </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.client}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.type}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-purple-600">{project.price}</td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
-                              {getStatusText(project.status)}
+                            <div className="text-sm text-gray-900">{project.client}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{project.type[language]}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">{project.price}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
+                              {translations.recentProjects.statuses[project.status][language]}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.date}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {project.date}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
