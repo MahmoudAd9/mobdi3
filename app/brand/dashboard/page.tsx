@@ -98,7 +98,7 @@ export default function BrandDashboard() {
     createCampaign: {
       ar: 'إنشاء حملة جديدة',
       en: 'Create New Campaign',
-      fr: 'Créer une Nouvelle Campagne'
+      fr: 'Nouvelle Campagne'
     },
     stats: {
       budget: {
@@ -516,12 +516,12 @@ export default function BrandDashboard() {
     <div className="min-h-screen bg-gray-50">
       <div className="flex flex-col md:flex-row">
         {/* Sidebar */}
-        <div className="w-full md:w-64 bg-white shadow-md md:min-h-screen p-4">
+        <div className="w-full md:w-72 bg-white shadow-md md:min-h-screen p-4 flex flex-col">
           <div className="mb-8 text-center">
             <div className="relative h-24 w-24 rounded-full overflow-hidden mx-auto mb-4">
               <Image
                 src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                alt="شعار الشركة"
+                alt="Logo"
                 fill
                 className="object-cover"
               />
@@ -531,60 +531,60 @@ export default function BrandDashboard() {
             <p className="text-gray-500 text-sm">asma@gmail.com</p>
           </div>
 
-          <nav className="space-y-2">
+          <nav className="space-y-2 flex-grow">
             <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'overview'
+              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-left ${activeTab === 'overview'
                 ? 'bg-purple-100 text-purple-600'
                 : 'text-gray-600 hover:bg-gray-100'
                 }`}
               onClick={() => setActiveTab('overview')}
             >
-              <BarChart3 className="h-5 w-5" />
-              <span>{translations.overview[language]}</span>
+              <BarChart3 className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.overview[language]}</span>
             </button>
 
             <Link
               href="/brand/campaigns"
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'campaigns'
+              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-left ${activeTab === 'campaigns'
                 ? 'bg-purple-100 text-purple-600'
                 : 'text-gray-600 hover:bg-gray-100'
                 }`}
             >
-              <Package className="h-5 w-5" />
-              <span>{translations.campaigns[language]}</span>
+              <Package className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.campaigns[language]}</span>
             </Link>
 
             <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'messages'
+              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-left ${activeTab === 'messages'
                 ? 'bg-purple-100 text-purple-600'
                 : 'text-gray-600 hover:bg-gray-100'
                 }`}
               onClick={() => setActiveTab('messages')}
             >
-              <MessageSquare className="h-5 w-5" />
-              <span>{translations.messages[language]}</span>
+              <MessageSquare className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.messages[language]}</span>
             </button>
 
             <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'profile'
+              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-left ${activeTab === 'profile'
                 ? 'bg-purple-100 text-purple-600'
                 : 'text-gray-600 hover:bg-gray-100'
                 }`}
               onClick={() => setActiveTab('profile')}
             >
-              <Building2 className="h-5 w-5" />
-              <span>{translations.profile[language]}</span>
+              <Building2 className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.profile[language]}</span>
             </button>
 
             <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'settings'
+              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-left ${activeTab === 'settings'
                 ? 'bg-purple-100 text-purple-600'
                 : 'text-gray-600 hover:bg-gray-100'
                 }`}
               onClick={() => setActiveTab('settings')}
             >
-              <Settings className="h-5 w-5" />
-              <span>{translations.settings[language]}</span>
+              <Settings className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.settings[language]}</span>
             </button>
           </nav>
 
@@ -593,40 +593,39 @@ export default function BrandDashboard() {
               href="/brand/create-campaign"
               className="w-full bg-purple-600 text-white flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors"
             >
-              <Package className="h-5 w-5" />
-              <span>{translations.createCampaign[language]}</span>
+              <Package className="h-5 w-5 flex-shrink-0" />
+              <span className="truncate min-w-[120px]">{translations.createCampaign[language]}</span>
             </Link>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-4 overflow-x-hidden">
           {/* Overview Tab */}
           {activeTab === 'overview' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.overview[language]}</h1>
+            <div className="max-w-full">
+              <h1 className="text-2xl font-bold mb-4">{translations.overview[language]}</h1>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
                 {stats.map(stat => (
-                  <div key={stat.id} className="bg-white p-6 rounded-lg shadow-md">
+                  <div key={stat.id} className="bg-white p-4 rounded-lg shadow-md">
                     <div className="flex justify-between items-start">
                       <div>
                         <p className="text-gray-500 text-sm mb-1">{stat.title}</p>
-                        <h3 className="text-2xl font-bold">{stat.value}</h3>
+                        <h3 className="text-xl font-bold">{stat.value}</h3>
                       </div>
-                      <div className={`p-3 rounded-full ${stat.id === 'budget' ? 'bg-green-100 text-green-600' :
+                      <div className={`p-2 rounded-full ${stat.id === 'budget' ? 'bg-green-100 text-green-600' :
                         stat.id === 'campaigns' ? 'bg-blue-100 text-blue-600' :
                           stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
                             stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
                               stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
                                 'bg-orange-100 text-orange-600'
                         }`}>
-                        <stat.icon className="h-6 w-6" />
+                        <stat.icon className="h-5 w-5" />
                       </div>
                     </div>
-                    <div className={`mt-4 text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-                      }`}>
+                    <div className={`mt-2 text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
                       <span className="flex items-center">
                         {stat.changeType === 'positive' ? (
                           <TrendingUp className="h-4 w-4 mr-1" />
@@ -647,27 +646,27 @@ export default function BrandDashboard() {
                   {translations.recentProjects.viewAll[language]}
                 </Link>
               </div>
-              <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+              <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
+                  <table className="w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.project[language]}
                         </th>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.client[language]}
                         </th>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.type[language]}
                         </th>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.price[language]}
                         </th>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.status[language]}
                         </th>
-                        <th scope="col" className={`px-6 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <th scope="col" className={`px-4 py-3 text-xs font-medium tracking-wider ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                           {translations.recentProjects.date[language]}
                         </th>
                       </tr>
@@ -675,29 +674,29 @@ export default function BrandDashboard() {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {recentProjects.map((project) => (
                         <tr key={project.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-3 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
                               {project.title[language]}
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-xs text-gray-500">
                               {project.description[language]}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-3 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{project.client}</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-3 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{project.type[language]}</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-3 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{project.price}</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-3 whitespace-nowrap">
                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
                               {getStatusText(project.status as ProjectStatus)}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                             {project.date}
                           </td>
                         </tr>
