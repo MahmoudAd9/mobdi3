@@ -891,78 +891,29 @@ export default function BrandDashboard() {
               <h1 className="text-2xl font-bold mb-6">{translations.settings[language]}</h1>
 
               <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-                <h3 className="text-lg font-bold mb-4">{translations.accountSettings[language]}</h3>
+                <h3 className="text-lg font-bold mb-4">{translations.password[language]}</h3>
 
-                <div className="mb-6">
-                  <h4 className="text-md font-medium mb-2">{translations.details[language]}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.companyName.label[language]}</label>
-                      <input
-                        type="text"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="COD Network"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.email.label[language]}</label>
-                      <input
-                        type="email"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="asma@gmail.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.country.label[language]}</label>
-                      <input
-                        type="text"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue={translations.companyInfo.country.value[language]}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.phone.label[language]}</label>
-                      <div className="flex">
-                        <select className="border border-gray-300 rounded-r-none rounded-l-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                          <option>+51</option>
-                        </select>
-                        <input
-                          type="text"
-                          className="flex-1 border border-gray-300 rounded-l-none rounded-r-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                          defaultValue="966 696 123"
-                        />
-                      </div>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-gray-500 mb-1">{translations.changePassword[language]}</label>
+                    <input
+                      type="password"
+                      className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      placeholder={translations.passwordPlaceholder[language]}
+                    />
                   </div>
-                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    {translations.saveChanges[language]}
-                  </button>
-                </div>
-
-                <div className="pt-6 border-t border-gray-200">
-                  <h4 className="text-md font-medium mb-2">{translations.password[language]}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.changePassword[language]}</label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder={translations.passwordPlaceholder[language]}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">{translations.confirmPassword[language]}</label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder={translations.confirmPasswordPlaceholder[language]}
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm text-gray-500 mb-1">{translations.confirmPassword[language]}</label>
+                    <input
+                      type="password"
+                      className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                      placeholder={translations.confirmPasswordPlaceholder[language]}
+                    />
                   </div>
-                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    {translations.updatePassword[language]}
-                  </button>
                 </div>
+                <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
+                  {translations.updatePassword[language]}
+                </button>
               </div>
             </div>
           )}
