@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Search, Filter, CheckCircle, Clock, X, ArrowLeft, Package, Plus } from 'lucide-react';
+import { Search, Filter, CheckCircle, Clock, X, ArrowLeft, Package, Plus, User } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Campaigns() {
@@ -11,7 +11,7 @@ export default function Campaigns() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
   const { language } = useLanguage();
-  
+
   const translations = {
     title: {
       ar: 'حملاتي',
@@ -43,23 +43,23 @@ export default function Campaigns() {
     status: {
       all: {
         ar: 'الكل',
-        en: 'All',
-        fr: 'Tous'
+        en: 'All Campaigns',
+        fr: 'Toutes les Campagnes'
       },
       active: {
         ar: 'نشط',
         en: 'Active',
-        fr: 'Actif'
+        fr: 'Active'
       },
       pending: {
         ar: 'قيد التنفيذ',
-        en: 'Pending',
-        fr: 'En attente'
+        en: 'Under Review',
+        fr: 'En Révision'
       },
       completed: {
         ar: 'مكتمل',
         en: 'Completed',
-        fr: 'Terminé'
+        fr: 'Terminée'
       },
       draft: {
         ar: 'مسودة',
@@ -77,7 +77,7 @@ export default function Campaigns() {
         label: {
           ar: 'الفئة:',
           en: 'Category:',
-          fr: 'Catégorie:'
+          fr: 'Catégorie :'
         },
         all: {
           ar: 'جميع الفئات',
@@ -118,13 +118,13 @@ export default function Campaigns() {
       startDate: {
         ar: 'تاريخ البدء:',
         en: 'Start Date:',
-        fr: 'Date de Début:'
+        fr: 'Date de Début :'
       },
       budget: {
         label: {
           ar: 'الميزانية:',
           en: 'Budget:',
-          fr: 'Budget:'
+          fr: 'Budget :'
         },
         all: {
           ar: 'جميع الميزانيات',
@@ -134,17 +134,17 @@ export default function Campaigns() {
         low: {
           ar: 'أقل من $200',
           en: 'Less than $200',
-          fr: 'Moins de $200'
+          fr: 'Moins de 200$'
         },
         medium: {
           ar: '$200 - $300',
           en: '$200 - $300',
-          fr: '$200 - $300'
+          fr: '200$ - 300$'
         },
         high: {
           ar: 'أكثر من $300',
           en: 'More than $300',
-          fr: 'Plus de $300'
+          fr: 'Plus de 300$'
         }
       },
       apply: {
@@ -156,13 +156,13 @@ export default function Campaigns() {
     campaignCard: {
       influencers: {
         ar: 'مؤثر',
-        en: 'influencer',
-        fr: 'influenceur'
+        en: 'influencers',
+        fr: 'influenceurs'
       },
       requests: {
         ar: 'طلب',
-        en: 'request',
-        fr: 'demande'
+        en: 'requests',
+        fr: 'demandes'
       },
       viewDetails: {
         ar: 'عرض التفاصيل',
@@ -172,19 +172,19 @@ export default function Campaigns() {
       notPublished: {
         ar: 'غير منشور بعد',
         en: 'Not published yet',
-        fr: 'Pas encore publié'
+        fr: 'Pas encore publiée'
       }
     },
     noCampaigns: {
       title: {
         ar: 'لا توجد حملات بعد',
         en: 'No Campaigns Yet',
-        fr: 'Pas Encore de Campagnes'
+        fr: 'Aucune Campagne'
       },
       description: {
         ar: 'قم بإنشاء حملتك الأولى للبدء في التواصل مع المؤثرين',
         en: 'Create your first campaign to start connecting with influencers',
-        fr: 'Créez votre première campagne pour commencer à vous connecter avec des influenceurs'
+        fr: 'Créez votre première campagne pour commencer à interagir avec les influenceurs'
       },
       button: {
         ar: 'إنشاء حملة جديدة',
@@ -193,7 +193,7 @@ export default function Campaigns() {
       }
     }
   };
-  
+
   const statuses = [
     { id: 'all', name: translations.status.all[language] },
     { id: 'active', name: translations.status.active[language] },
@@ -201,93 +201,117 @@ export default function Campaigns() {
     { id: 'completed', name: translations.status.completed[language] },
     { id: 'draft', name: translations.status.draft[language] },
   ];
-  
+
   const campaigns = [
     {
       id: 1,
-      title: 'سماعة لاسلكية جديدة',
+      title: language === 'ar' ? 'سماعة لاسلكية جديدة' :
+        language === 'fr' ? 'Nouveaux Écouteurs Sans Fil' :
+          'New Wireless Headphones',
       image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'tech',
       status: 'active',
       budget: '$200',
       startDate: '2025-04-15',
       endDate: '2025-04-30',
-      description: 'مراجعة تقنية مع التركيز على جودة الصوت وعمر البطارية',
+      description: language === 'ar' ? 'مراجعة تقنية مع التركيز على جودة الصوت وعمر البطارية' :
+        language === 'fr' ? 'Évaluation technique axée sur la qualité sonore et l\'autonomie de la batterie' :
+          'Technical review focusing on sound quality and battery life',
       creators: 3,
       applications: 12,
     },
     {
       id: 2,
-      title: 'أحمر شفاه جديد',
+      title: language === 'ar' ? 'أحمر شفاه جديد' :
+        language === 'fr' ? 'Nouveau Rouge à Lèvres' :
+          'New Lipstick',
       image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'beauty',
       status: 'pending',
       budget: '$300',
       startDate: '2025-04-10',
       endDate: '2025-04-25',
-      description: 'فيديو تجربة المنتج مع إظهار الألوان المختلفة وإبراز مقاومته للماء',
+      description: language === 'ar' ? 'فيديو تجربة المنتج مع إظهار الألوان المختلفة وإبراز مقاومته للماء' :
+        language === 'fr' ? 'Vidéo de test du produit montrant les différentes couleurs et sa résistance à l\'eau' :
+          'Product review video showcasing different colors and water resistance',
       creators: 2,
       applications: 8,
     },
     {
       id: 3,
-      title: 'حذاء رياضي جديد',
+      title: language === 'ar' ? 'حذاء رياضي جديد' :
+        language === 'fr' ? 'Nouvelles Chaussures de Course' :
+          'New Running Shoes',
       image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'fitness',
       status: 'completed',
       budget: '$250',
       startDate: '2025-03-15',
       endDate: '2025-03-30',
-      description: 'مراجعة تجربة أثناء التمرين مع التركيز على الراحة والخفة أثناء الجري',
+      description: language === 'ar' ? 'مراجعة تجربة أثناء التمرين مع التركيز على الراحة والخفة أثناء الجري' :
+        language === 'fr' ? 'Test d\'expérience pendant l\'entraînement, accent sur le confort et la légèreté pendant la course' :
+          'Experience review during workout focusing on comfort and lightness while running',
       creators: 5,
       applications: 15,
     },
     {
       id: 4,
-      title: 'عطر فاخر جديد',
+      title: language === 'ar' ? 'عطر فاخر جديد' :
+        language === 'fr' ? 'Nouveau Parfum de Luxe' :
+          'New Luxury Perfume',
       image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'beauty',
       status: 'draft',
       budget: '$350',
       startDate: '',
       endDate: '',
-      description: 'مراجعة للعطر الجديد مع وصف الرائحة ومدة بقائها',
+      description: language === 'ar' ? 'مراجعة للعطر الجديد مع وصف الرائحة ومدة بقائها' :
+        language === 'fr' ? 'Revue du nouveau parfum avec description de la fragrance et sa tenue' :
+          'Review of the new perfume with fragrance description and longevity',
       creators: 0,
       applications: 0,
     },
     {
       id: 5,
-      title: 'ساعة ذكية متطورة',
+      title: language === 'ar' ? 'ساعة ذكية متطورة' :
+        language === 'fr' ? 'Montre Connectée Avancée' :
+          'Advanced Smartwatch',
       image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'tech',
       status: 'active',
       budget: '$280',
       startDate: '2025-04-20',
       endDate: '2025-05-05',
-      description: 'مراجعة شاملة للساعة الذكية مع التركيز على ميزات تتبع اللياقة البدنية وعمر البطارية',
+      description: language === 'ar' ? 'مراجعة شاملة للساعة الذكية مع التركيز على ميزات تتبع اللياقة البدنية وعمر البطارية' :
+        language === 'fr' ? 'Revue complète de la montre connectée, focus sur le suivi fitness et l\'autonomie' :
+          'Comprehensive smartwatch review focusing on fitness tracking features and battery life',
       creators: 1,
       applications: 6,
     },
     {
       id: 6,
-      title: 'كاميرا احترافية',
+      title: language === 'ar' ? 'كاميرا احترافية' :
+        language === 'fr' ? 'Appareil Photo Professionnel' :
+          'Professional Camera',
       image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       category: 'tech',
       status: 'pending',
       budget: '$400',
       startDate: '2025-04-25',
       endDate: '2025-05-10',
-      description: 'مراجعة تفصيلية للكاميرا مع اختبار جودة الصورة في ظروف إضاءة مختلفة',
+      description: language === 'ar' ? 'مراجعة تفصيلية للكاميرا مع اختبار جودة الصورة في ظروف إضاءة مختلفة' :
+        language === 'fr' ? 'Revue détaillée de l\'appareil photo avec test de qualité d\'image sous différentes conditions d\'éclairage' :
+          'Detailed camera review with image quality testing under different lighting conditions',
       creators: 2,
       applications: 9,
     },
   ];
-  
+
   const filteredCampaigns = campaigns.filter(campaign => {
-    const matchesSearch = campaign.title.includes(searchTerm) || 
-                          campaign.description.includes(searchTerm);
+    const matchesSearch = campaign.title.includes(searchTerm) ||
+      campaign.description.includes(searchTerm);
     const matchesStatus = statusFilter === 'all' || campaign.status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -327,21 +351,21 @@ export default function Campaigns() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center">
-              <Link href="/brand/dashboard" className="flex items-center text-purple-600 hover:text-purple-700 mr-4">
-                <ArrowLeft className="h-5 w-5 mr-1" />
+              <Link href="/brand/dashboard" className={`flex items-center text-purple-600 hover:text-purple-700 ${language === 'ar' ? 'ml-4' : 'mr-4'}`}>
+                <ArrowLeft className={`h-5 w-5 ${language === 'ar' ? 'ml-1 rotate-180' : 'mr-1'}`} />
                 <span>{translations.backToDashboard[language]}</span>
               </Link>
               <h1 className="text-2xl font-bold">{translations.title[language]}</h1>
             </div>
-            <Link 
-              href="/brand/create-campaign" 
+            <Link
+              href="/brand/create-campaign"
               className="bg-purple-600 text-white flex items-center px-4 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
             >
               <Plus className="h-5 w-5 mr-1" />
               <span>{translations.createCampaign[language]}</span>
             </Link>
           </div>
-          
+
           {filteredCampaigns.length > 0 ? (
             <>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
@@ -355,24 +379,23 @@ export default function Campaigns() {
                   />
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 </div>
-                
+
                 <div className="flex items-center gap-2 w-full md:w-auto">
                   <div className="flex flex-wrap gap-2 overflow-x-auto">
                     {statuses.map(status => (
                       <button
                         key={status.id}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                          statusFilter === status.id
-                            ? 'bg-purple-600 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                        }`}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${statusFilter === status.id
+                          ? 'bg-purple-600 text-white'
+                          : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                          }`}
                         onClick={() => setStatusFilter(status.id)}
                       >
                         {status.name}
                       </button>
                     ))}
                   </div>
-                  
+
                   <button
                     className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 whitespace-nowrap"
                     onClick={() => setShowFilters(!showFilters)}
@@ -382,7 +405,7 @@ export default function Campaigns() {
                   </button>
                 </div>
               </div>
-              
+
               {showFilters && (
                 <div className="mb-6 p-6 bg-white rounded-lg shadow-md">
                   <h3 className="font-medium mb-4">{translations.advancedFilters.title[language]}</h3>
@@ -399,15 +422,15 @@ export default function Campaigns() {
                         <option value="gaming">{translations.advancedFilters.category.gaming[language]}</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm text-gray-500 mb-2">{translations.advancedFilters.startDate[language]}</label>
-                      <input 
-                        type="date" 
+                      <input
+                        type="date"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm text-gray-500 mb-2">{translations.advancedFilters.budget.label[language]}</label>
                       <select className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
@@ -418,7 +441,7 @@ export default function Campaigns() {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-end mt-4">
                     <button className="bg-purple-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-700 transition-colors">
                       {translations.advancedFilters.apply[language]}
@@ -426,13 +449,13 @@ export default function Campaigns() {
                   </div>
                 </div>
               )}
-              
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredCampaigns.map(campaign => (
                   <div key={campaign.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div className="relative h-[200px]">
-                      <Image 
-                        src={campaign.image} 
+                      <Image
+                        src={campaign.image}
                         alt={campaign.title}
                         fill
                         className="object-cover"
@@ -444,14 +467,14 @@ export default function Campaigns() {
                     <div className="p-6">
                       <h3 className="text-xl font-bold mb-2">{campaign.title}</h3>
                       <p className="text-gray-600 mb-4 line-clamp-2">{campaign.description}</p>
-                      
+
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-purple-600 font-bold">{campaign.budget}</span>
                         <span className="text-gray-500 text-sm">
                           {campaign.status !== 'draft' ? `${campaign.startDate} - ${campaign.endDate}` : translations.campaignCard.notPublished[language]}
                         </span>
                       </div>
-                      
+
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-4">
                           <span className="text-gray-500 text-sm flex items-center">
@@ -462,7 +485,7 @@ export default function Campaigns() {
                             {campaign.applications} {translations.campaignCard.requests[language]}
                           </span>
                         </div>
-                        <Link 
+                        <Link
                           href={`/brand/campaign/${campaign.id}`}
                           className="bg-purple-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-700 transition-colors"
                         >
@@ -481,8 +504,8 @@ export default function Campaigns() {
               </div>
               <h2 className="text-2xl font-bold mb-2">{translations.noCampaigns.title[language]}</h2>
               <p className="text-gray-600 mb-8 text-center max-w-md">{translations.noCampaigns.description[language]}</p>
-              <Link 
-                href="/brand/create-campaign" 
+              <Link
+                href="/brand/create-campaign"
                 className="bg-purple-600 text-white flex items-center px-6 py-3 rounded-md font-medium hover:bg-purple-700 transition-colors"
               >
                 <Plus className="h-5 w-5 mr-2" />
