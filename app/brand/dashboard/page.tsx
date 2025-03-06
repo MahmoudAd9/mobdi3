@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -21,6 +21,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function BrandDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isEditing, setIsEditing] = useState(false);
   const { language } = useLanguage();
 
   const translations = {
@@ -53,6 +54,46 @@ export default function BrandDashboard() {
       ar: 'الإعدادات',
       en: 'Settings',
       fr: 'Paramètres'
+    },
+    accountSettings: {
+      ar: 'إعدادات الحساب',
+      en: 'Account Settings',
+      fr: 'Paramètres du Compte'
+    },
+    details: {
+      ar: 'التفاصيل',
+      en: 'Details',
+      fr: 'Détails'
+    },
+    password: {
+      ar: 'كلمة المرور',
+      en: 'Password',
+      fr: 'Mot de passe'
+    },
+    changePassword: {
+      ar: 'تغيير كلمة المرور',
+      en: 'Change Password',
+      fr: 'Changer le Mot de Passe'
+    },
+    confirmPassword: {
+      ar: 'تأكيد كلمة المرور',
+      en: 'Confirm Password',
+      fr: 'Confirmer le Mot de Passe'
+    },
+    passwordPlaceholder: {
+      ar: 'أدخل كلمة المرور الخاصة بك...',
+      en: 'Enter your password...',
+      fr: 'Entrez votre mot de passe...'
+    },
+    confirmPasswordPlaceholder: {
+      ar: 'تأكيد كلمة المرور...',
+      en: 'Confirm password...',
+      fr: 'Confirmer le mot de passe...'
+    },
+    updatePassword: {
+      ar: 'تحديث كلمة المرور',
+      en: 'Update Password',
+      fr: 'Mettre à Jour le Mot de Passe'
     },
     createCampaign: {
       ar: 'إنشاء حملة جديدة',
@@ -166,7 +207,161 @@ export default function BrandDashboard() {
           fr: 'Terminé'
         }
       }
+    },
+    companyInfo: {
+      title: {
+        ar: 'معلومات الشركة',
+        en: 'Company Information',
+        fr: 'Informations de l\'Entreprise'
+      },
+      companyName: {
+        label: {
+          ar: 'اسم الشركة:',
+          en: 'Company Name:',
+          fr: 'Nom de l\'Entreprise:'
+        }
+      },
+      email: {
+        label: {
+          ar: 'البريد الإلكتروني:',
+          en: 'Email:',
+          fr: 'Email:'
+        }
+      },
+      phone: {
+        label: {
+          ar: 'رقم الهاتف:',
+          en: 'Phone Number:',
+          fr: 'Numéro de Téléphone:'
+        }
+      },
+      country: {
+        label: {
+          ar: 'الدولة:',
+          en: 'Country:',
+          fr: 'Pays:'
+        },
+        value: {
+          ar: 'المغرب',
+          en: 'Morocco',
+          fr: 'Maroc'
+        }
+      },
+      industry: {
+        label: {
+          ar: 'المجال:',
+          en: 'Industry:',
+          fr: 'Secteur:'
+        },
+        value: {
+          ar: 'التكنولوجيا',
+          en: 'Technology',
+          fr: 'Technologie'
+        }
+      },
+      joinDate: {
+        label: {
+          ar: 'تاريخ الانضمام:',
+          en: 'Join Date:',
+          fr: 'Date d\'Inscription:'
+        },
+        value: {
+          ar: '15 يناير 2025',
+          en: 'January 15, 2025',
+          fr: '15 Janvier 2025'
+        }
+      }
+    },
+    companyDescription: {
+      title: {
+        ar: 'وصف الشركة',
+        en: 'Company Description',
+        fr: 'Description de l\'Entreprise'
+      },
+      content: {
+        ar: 'شركة رائدة في مجال التكنولوجيا والإلكترونيات، نقدم منتجات مبتكرة وعالية الجودة للمستهلكين. نسعى دائمًا لتقديم أحدث التقنيات وأفضل تجربة للمستخدمين.',
+        en: 'A leading technology and electronics company, we provide innovative and high-quality products to consumers. We always strive to deliver the latest technologies and the best user experience.',
+        fr: 'Une entreprise leader dans la technologie et l\'électronique, nous fournissons des produits innovants et de haute qualité aux consommateurs. Nous nous efforçons toujours d\'offrir les dernières technologies et la meilleure expérience utilisateur.'
+      }
+    },
+    editProfile: {
+      ar: 'تعديل الملف الشخصي',
+      en: 'Edit Profile',
+      fr: 'Modifier le Profil'
+    },
+    saveChanges: {
+      ar: 'حفظ التغييرات',
+      en: 'Save Changes',
+      fr: 'Enregistrer les Modifications'
+    },
+    cancel: {
+      ar: 'إلغاء',
+      en: 'Cancel',
+      fr: 'Annuler'
     }
+  };
+
+  type ProjectStatus = 'new' | 'pending' | 'completed';
+
+  interface Project {
+    id: number;
+    title: {
+      ar: string;
+      en: string;
+      fr: string;
+    };
+    client: string;
+    type: {
+      ar: string;
+      en: string;
+      fr: string;
+    };
+    status: ProjectStatus;
+    price: string;
+    date: string;
+    description: {
+      ar: string;
+      en: string;
+      fr: string;
+    };
+    statusColor: string;
+  }
+
+  const [profileData, setProfileData] = useState({
+    companyName: 'COD Network',
+    email: 'asma@gmail.com',
+    phone: '+51 966 696 123',
+    country: translations.companyInfo.country.value[language],
+    industry: translations.companyInfo.industry.value[language],
+    description: translations.companyDescription.content[language]
+  });
+
+  // Update profile data when language changes
+  useEffect(() => {
+    setProfileData(prevData => ({
+      ...prevData,
+      country: translations.companyInfo.country.value[language],
+      industry: translations.companyInfo.industry.value[language],
+      description: translations.companyDescription.content[language]
+    }));
+  }, [language]);
+
+  const handleSave = () => {
+    setIsEditing(false);
+    // Here you would typically save the data to your backend
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    // Reset the form data to original values
+    setProfileData({
+      companyName: 'COD Network',
+      email: 'asma@gmail.com',
+      phone: '+51 966 696 123',
+      country: translations.companyInfo.country.value[language],
+      industry: translations.companyInfo.industry.value[language],
+      description: translations.companyDescription.content[language]
+    });
   };
 
   const stats = [
@@ -178,7 +373,7 @@ export default function BrandDashboard() {
     { id: 'rating', title: translations.stats.averageRating.title[language], value: '4.5/5', icon: Star, change: '+0.2', changeType: 'positive' },
   ];
 
-  const recentProjects = [
+  const recentProjects: Project[] = [
     {
       id: 1,
       title: {
@@ -313,17 +508,8 @@ export default function BrandDashboard() {
     },
   ];
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'new':
-        return translations.recentProjects.statuses.new[language];
-      case 'pending':
-        return translations.recentProjects.statuses.pending[language];
-      case 'completed':
-        return translations.recentProjects.statuses.completed[language];
-      default:
-        return status;
-    }
+  const getStatusText = (status: ProjectStatus) => {
+    return translations.recentProjects.statuses[status][language];
   };
 
   return (
@@ -508,7 +694,7 @@ export default function BrandDashboard() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
-                              {translations.recentProjects.statuses[project.status][language]}
+                              {getStatusText(project.status as ProjectStatus)}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -570,54 +756,126 @@ export default function BrandDashboard() {
                     <div className="relative h-48 w-48 rounded-lg overflow-hidden mx-auto">
                       <Image
                         src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                        alt="شعار الشركة"
+                        alt={translations.companyInfo.companyName.label[language]}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="text-center mt-4">
-                      <h2 className="text-xl font-bold">COD Network</h2>
-                      <p className="text-gray-500">asma@gmail.com</p>
+                      <h2 className="text-xl font-bold">{profileData.companyName}</h2>
+                      <p className="text-gray-500">{profileData.email}</p>
                     </div>
                   </div>
 
                   <div className="md:w-2/3 md:pr-8">
-                    <h3 className="text-lg font-bold mb-4">معلومات الشركة</h3>
+                    <h3 className="text-lg font-bold mb-4">{translations.companyInfo.title[language]}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div>
-                        <p className="text-sm text-gray-500">اسم الشركة:</p>
-                        <p className="font-medium">COD Network</p>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.companyName.label[language]}</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.companyName}
+                            onChange={(e) => setProfileData({ ...profileData, companyName: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.companyName}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">البريد الإلكتروني:</p>
-                        <p className="font-medium">asma@gmail.com</p>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.email.label[language]}</p>
+                        {isEditing ? (
+                          <input
+                            type="email"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.email}
+                            onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.email}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">رقم الهاتف:</p>
-                        <p className="font-medium">+51 966 696 123</p>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.phone.label[language]}</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.phone}
+                            onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.phone}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">الدولة:</p>
-                        <p className="font-medium">المغرب</p>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.country.label[language]}</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.country}
+                            onChange={(e) => setProfileData({ ...profileData, country: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.country}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">المجال:</p>
-                        <p className="font-medium">التكنولوجيا</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">تاريخ الانضمام:</p>
-                        <p className="font-medium">15 يناير 2025</p>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.industry.label[language]}</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.industry}
+                            onChange={(e) => setProfileData({ ...profileData, industry: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.industry}</p>
+                        )}
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-bold mb-4">وصف الشركة</h3>
-                    <p className="text-gray-600 mb-6">
-                      شركة رائدة في مجال التكنولوجيا والإلكترونيات، نقدم منتجات مبتكرة وعالية الجودة للمستهلكين. نسعى دائمًا لتقديم أحدث التقنيات وأفضل تجربة للمستخدمين.
-                    </p>
+                    <h3 className="text-lg font-bold mb-4">{translations.companyDescription.title[language]}</h3>
+                    {isEditing ? (
+                      <textarea
+                        className="w-full border border-gray-300 rounded-md py-2 px-3 mb-6 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                        rows={4}
+                        value={profileData.description}
+                        onChange={(e) => setProfileData({ ...profileData, description: e.target.value })}
+                      />
+                    ) : (
+                      <p className="text-gray-600 mb-6">
+                        {profileData.description}
+                      </p>
+                    )}
 
-                    <button className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                      تعديل الملف الشخصي
-                    </button>
+                    <div className="flex gap-4">
+                      {isEditing ? (
+                        <>
+                          <button
+                            onClick={handleSave}
+                            className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
+                          >
+                            {translations.saveChanges[language]}
+                          </button>
+                          <button
+                            onClick={handleCancel}
+                            className="bg-gray-100 text-gray-700 px-6 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors"
+                          >
+                            {translations.cancel[language]}
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => setIsEditing(true)}
+                          className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
+                        >
+                          {translations.editProfile[language]}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -630,13 +888,13 @@ export default function BrandDashboard() {
               <h1 className="text-2xl font-bold mb-6">{translations.settings[language]}</h1>
 
               <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-                <h3 className="text-lg font-bold mb-4">إعدادات الحساب</h3>
+                <h3 className="text-lg font-bold mb-4">{translations.accountSettings[language]}</h3>
 
                 <div className="mb-6">
-                  <h4 className="text-md font-medium mb-2">التفاصيل</h4>
+                  <h4 className="text-md font-medium mb-2">{translations.details[language]}</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">اسم الشركة:</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.companyName.label[language]}</label>
                       <input
                         type="text"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -644,7 +902,7 @@ export default function BrandDashboard() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">البريد الإلكتروني:</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.email.label[language]}</label>
                       <input
                         type="email"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -652,15 +910,15 @@ export default function BrandDashboard() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">الدولة:</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.country.label[language]}</label>
                       <input
                         type="text"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="المغرب"
+                        defaultValue={translations.companyInfo.country.value[language]}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">رقم الهاتف:</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.companyInfo.phone.label[language]}</label>
                       <div className="flex">
                         <select className="border border-gray-300 rounded-r-none rounded-l-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
                           <option>+51</option>
@@ -674,32 +932,32 @@ export default function BrandDashboard() {
                     </div>
                   </div>
                   <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    حفظ التغييرات
+                    {translations.saveChanges[language]}
                   </button>
                 </div>
 
                 <div className="pt-6 border-t border-gray-200">
-                  <h4 className="text-md font-medium mb-2">كلمة المرور</h4>
+                  <h4 className="text-md font-medium mb-2">{translations.password[language]}</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">تغيير كلمة المرور</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.changePassword[language]}</label>
                       <input
                         type="password"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder="أدخل كلمة المرور الخاصة بك..."
+                        placeholder={translations.passwordPlaceholder[language]}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-500 mb-1">تأكيد كلمة المرور</label>
+                      <label className="block text-sm text-gray-500 mb-1">{translations.confirmPassword[language]}</label>
                       <input
                         type="password"
                         className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder="تأكيد كلمة المرور..."
+                        placeholder={translations.confirmPasswordPlaceholder[language]}
                       />
                     </div>
                   </div>
                   <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    تحديث كلمة المرور
+                    {translations.updatePassword[language]}
                   </button>
                 </div>
               </div>
