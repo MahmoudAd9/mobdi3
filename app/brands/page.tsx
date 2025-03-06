@@ -10,7 +10,7 @@ export default function Brands() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const { language } = useLanguage();
-  
+
   const translations = {
     hero: {
       title: {
@@ -101,7 +101,7 @@ export default function Brands() {
       }
     }
   };
-  
+
   const categories = [
     { id: 'all', name: translations.categories.all[language] },
     { id: 'beauty', name: translations.categories.beauty[language] },
@@ -111,7 +111,7 @@ export default function Brands() {
     { id: 'fitness', name: translations.categories.fitness[language] },
     { id: 'gaming', name: translations.categories.gaming[language] },
   ];
-  
+
   const brands = [
     {
       id: 1,
@@ -198,12 +198,13 @@ export default function Brands() {
       verified: false,
     },
   ];
-  
+
   const filteredBrands = brands.filter(brand => {
-    const matchesSearch = brand.name.includes(searchTerm) || 
-                          brand.description[language].includes(searchTerm);
+    const matchesSearch =
+      brand.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      brand.description[language].toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || brand.category === selectedCategory;
-    
+
     return matchesSearch && matchesCategory;
   });
 
@@ -218,11 +219,11 @@ export default function Brands() {
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
             {translations.hero.subtitle[language]}
           </p>
-          
+
           <div className="relative max-w-2xl mx-auto">
             <input
               type="text"
-              className="w-full py-4 px-6 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className="w-full py-4 px-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               placeholder={translations.hero.searchPlaceholder[language]}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -239,11 +240,10 @@ export default function Brands() {
             {categories.map(category => (
               <button
                 key={category.id}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category.id
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  }`}
                 onClick={() => setSelectedCategory(category.id)}
               >
                 {category.name}
@@ -260,8 +260,8 @@ export default function Brands() {
             {filteredBrands.map(brand => (
               <div key={brand.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="relative h-[200px]">
-                  <Image 
-                    src={brand.logo} 
+                  <Image
+                    src={brand.logo}
                     alt={brand.name}
                     fill
                     className="object-cover"
@@ -288,7 +288,7 @@ export default function Brands() {
                       <Building2 className="h-4 w-4 mr-1" />
                       {categories.find(c => c.id === brand.category)?.name}
                     </span>
-                    <Link 
+                    <Link
                       href={`/brands/${brand.id}`}
                       className="bg-purple-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-700 transition-colors"
                     >
@@ -307,8 +307,8 @@ export default function Brands() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">{translations.cta.title[language]}</h2>
           <p className="text-xl mb-8">{translations.cta.subtitle[language]}</p>
-          <Link 
-            href="/signup" 
+          <Link
+            href="/signup"
             className="bg-white text-purple-600 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             {translations.cta.button[language]}
