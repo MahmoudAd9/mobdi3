@@ -361,8 +361,8 @@ export default function Dashboard() {
               <button
                 key={item.id}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg ${activeTab === item.id
-                    ? 'bg-purple-100 text-purple-600'
-                    : 'text-gray-600 hover:bg-gray-100'
+                  ? 'bg-purple-100 text-purple-600'
+                  : 'text-gray-600 hover:bg-gray-100'
                   } ${language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}
                 onClick={() => setActiveTab(item.id)}
               >
@@ -395,27 +395,26 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {stats.map(stat => (
                   <div key={stat.id} className="bg-white p-6 rounded-lg shadow-md">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-gray-500 text-sm mb-1">{stat.title}</p>
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="min-w-0">
+                        <p className="text-gray-500 text-sm mb-1 truncate">{stat.title}</p>
                         <h3 className="text-2xl font-bold">{stat.value}</h3>
                       </div>
-                      <div className={`p-3 rounded-full ${stat.id === 'revenue' ? 'bg-green-100 text-green-600' :
-                        stat.id === 'projects' ? 'bg-blue-100 text-blue-600' :
-                          stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
-                            stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
-                              stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
-                                'bg-orange-100 text-orange-600'
+                      <div className={`p-3 rounded-full flex-shrink-0 ${stat.id === 'revenue' ? 'bg-green-100 text-green-600' :
+                          stat.id === 'projects' ? 'bg-blue-100 text-blue-600' :
+                            stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
+                              stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
+                                stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
+                                  'bg-orange-100 text-orange-600'
                         }`}>
                         <stat.icon className="h-6 w-6" />
                       </div>
                     </div>
-                    <div className={`mt-4 text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                    <div className={`mt-4 text-sm flex items-center gap-1 ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                       }`}>
-                      <span className="flex items-center">
-                        <TrendingUp className={`h-4 w-4 mr-1 ${stat.changeType === 'negative' ? 'transform rotate-180' : ''}`} />
-                        {stat.change} {translations.timePeriod.sinceLastMonth[language]}
-                      </span>
+                      <TrendingUp className={`h-4 w-4 flex-shrink-0 ${stat.changeType === 'negative' ? 'transform rotate-180' : ''
+                        }`} />
+                      <span className="truncate">{stat.change} {translations.timePeriod.sinceLastMonth[language]}</span>
                     </div>
                   </div>
                 ))}
@@ -428,22 +427,22 @@ export default function Dashboard() {
                   <table className="w-full">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
                           {translations.recentProjects.table.project[language]}
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">
                           {translations.recentProjects.table.client[language]}
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">
                           {translations.recentProjects.table.type[language]}
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                           {translations.recentProjects.table.price[language]}
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                           {translations.recentProjects.table.status[language]}
                         </th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                           {translations.recentProjects.table.date[language]}
                         </th>
                       </tr>
@@ -451,19 +450,23 @@ export default function Dashboard() {
                     <tbody className="divide-y divide-gray-200">
                       {recentProjects.map(project => (
                         <tr key={project.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">{project.title[language]}</div>
-                            <div className="text-xs text-gray-500">{project.description[language]}</div>
+                          <td className="px-4 py-4">
+                            <div className="text-sm font-medium text-gray-900 truncate max-w-[200px]">{project.title[language]}</div>
+                            <div className="text-xs text-gray-500 truncate max-w-[200px]">{project.description[language]}</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.client}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.type}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-purple-600">{project.price}</td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 py-4">
+                            <div className="text-sm text-gray-500 truncate max-w-[150px]">{project.client}</div>
+                          </td>
+                          <td className="px-4 py-4">
+                            <div className="text-sm text-gray-500 truncate max-w-[150px]">{project.type}</div>
+                          </td>
+                          <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-purple-600">{project.price}</td>
+                          <td className="px-4 py-4 whitespace-nowrap">
                             <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
                               {project.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{project.date}</td>
+                          <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{project.date}</td>
                         </tr>
                       ))}
                     </tbody>
