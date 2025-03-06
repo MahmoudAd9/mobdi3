@@ -372,12 +372,12 @@ export default function Campaigns() {
                 <div className="relative w-full md:w-96">
                   <input
                     type="text"
-                    className="w-full py-2 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className={`w-full py-2 ${language === 'ar' ? 'pl-4 pr-10' : 'pl-10 pr-4'} rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent`}
                     placeholder={translations.search.placeholder[language]}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Search className={`absolute ${language === 'ar' ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5`} />
                 </div>
 
                 <div className="flex items-center gap-2 w-full md:w-auto">

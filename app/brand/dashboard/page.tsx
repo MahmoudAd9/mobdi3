@@ -254,50 +254,60 @@ export default function BrandDashboard() {
     {
       id: 1,
       sender: {
-        name: 'أحمد محمد',
+        name: language === 'ar' ? 'أحمد محمد' : language === 'fr' ? 'Ahmed Mohammed' : 'Ahmed Mohammed',
         avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'مرحباً، هل يمكنني الحصول على معلومات إضافية عن المنتج؟',
+      preview: language === 'ar' ? 'مرحباً، هل يمكنني الحصول على معلومات إضافية عن المنتج؟' :
+        language === 'fr' ? 'Bonjour, puis-je avoir plus d\'informations sur le produit ?' :
+          'Hello, can I get additional information about the product?',
       time: '10:30 AM',
       unread: true,
     },
     {
       id: 2,
       sender: {
-        name: 'سارة أحمد',
+        name: language === 'ar' ? 'سارة أحمد' : language === 'fr' ? 'Sara Ahmed' : 'Sara Ahmed',
         avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'تم الانتهاء من تصوير الفيديو، سأرسل لك النسخة الأولية قريباً',
+      preview: language === 'ar' ? 'تم الانتهاء من تصوير الفيديو، سأرسل لك النسخة الأولية قريباً' :
+        language === 'fr' ? 'J\'ai terminé le tournage de la vidéo, je vous enverrai bientôt la première version' :
+          'Video shooting is complete, I\'ll send you the initial version soon',
       time: 'Yesterday',
       unread: false,
     },
     {
       id: 3,
       sender: {
-        name: 'محمد علي',
+        name: language === 'ar' ? 'محمد علي' : language === 'fr' ? 'Mohammed Ali' : 'Mohammed Ali',
         avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'هل يمكننا تمديد موعد التسليم ليوم إضافي؟',
+      preview: language === 'ar' ? 'هل يمكننا تمديد موعد التسليم ليوم إضافي؟' :
+        language === 'fr' ? 'Pouvons-nous prolonger le délai de livraison d\'un jour ?' :
+          'Can we extend the delivery deadline by one day?',
       time: 'Apr 12',
       unread: false,
     },
     {
       id: 4,
       sender: {
-        name: 'نورا خالد',
+        name: language === 'ar' ? 'نورا خالد' : language === 'fr' ? 'Nora Khalid' : 'Nora Khalid',
         avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'أحتاج إلى معلومات أكثر عن المنتج لإنشاء محتوى أفضل',
+      preview: language === 'ar' ? 'أحتاج إلى معلومات أكثر عن المنتج لإنشاء محتوى أفضل' :
+        language === 'fr' ? 'J\'ai besoin de plus d\'informations sur le produit pour créer un meilleur contenu' :
+          'I need more information about the product to create better content',
       time: 'Apr 10',
       unread: false,
     },
     {
       id: 5,
       sender: {
-        name: 'خالد الناصري',
+        name: language === 'ar' ? 'خالد الناصري' : language === 'fr' ? 'Khalid Al-Naseri' : 'Khalid Al-Naseri',
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'تم استلام المنتج، سأبدأ العمل على المراجعة غداً',
+      preview: language === 'ar' ? 'تم استلام المنتج، سأبدأ العمل على المراجعة غداً' :
+        language === 'fr' ? 'Produit reçu, je commencerai l\'évaluation demain' :
+          'Product received, I\'ll start working on the review tomorrow',
       time: 'Apr 8',
       unread: false,
     },
