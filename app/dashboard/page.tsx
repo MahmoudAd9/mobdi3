@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -22,6 +22,13 @@ import { useLanguage } from '@/context/LanguageContext';
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [userRole, setUserRole] = useState('brand'); // 'brand' or 'creator'
+  const [isEditing, setIsEditing] = useState(false);
+  const [profileData, setProfileData] = useState({
+    fullName: '',
+    email: 'asma@gmail.com',
+    phone: '+51 966 696 123',
+    country: ''
+  });
   const { language } = useLanguage();
 
   const translations = {
@@ -72,6 +79,84 @@ export default function Dashboard() {
         ar: 'أسماء علي',
         en: 'Asma Ali',
         fr: 'Asma Ali'
+      },
+      joinDate: {
+        label: {
+          ar: 'تاريخ الانضمام',
+          en: 'Join Date',
+          fr: 'Date d\'Inscription'
+        },
+        value: {
+          ar: '15 يناير 2025',
+          en: 'January 15, 2025',
+          fr: '15 Janvier 2025'
+        }
+      },
+      personalInfo: {
+        title: {
+          ar: 'المعلومات الشخصية',
+          en: 'Personal Information',
+          fr: 'Informations Personnelles'
+        },
+        fullName: {
+          label: {
+            ar: 'الاسم الكامل',
+            en: 'Full Name',
+            fr: 'Nom Complet'
+          }
+        },
+        phone: {
+          label: {
+            ar: 'رقم الهاتف',
+            en: 'Phone Number',
+            fr: 'Numéro de Téléphone'
+          },
+          value: '+51 966 696 123'
+        },
+        country: {
+          label: {
+            ar: 'الدولة',
+            en: 'Country',
+            fr: 'Pays'
+          },
+          value: {
+            ar: 'المغرب',
+            en: 'Morocco',
+            fr: 'Maroc'
+          }
+        }
+      },
+      ratings: {
+        title: {
+          ar: 'مجموعات التقييمات',
+          en: 'Rating Groups',
+          fr: 'Groupes d\'Évaluation'
+        },
+        value: '4/5'
+      },
+      editButton: {
+        ar: 'تعديل الملف الشخصي',
+        en: 'Edit Profile',
+        fr: 'Modifier le Profil'
+      },
+      userSettings: {
+        title: {
+          ar: 'إعدادات المستخدم',
+          en: 'User Settings',
+          fr: 'Paramètres Utilisateur'
+        },
+        details: {
+          title: {
+            ar: 'التفاصيل',
+            en: 'Details',
+            fr: 'Détails'
+          }
+        },
+        saveChanges: {
+          ar: 'حفظ التغييرات',
+          en: 'Save Changes',
+          fr: 'Enregistrer les Modifications'
+        }
       }
     },
     stats: {
@@ -262,6 +347,47 @@ export default function Dashboard() {
           }
         }
       }
+    },
+    messages: {
+      title: {
+        ar: 'الرسائل',
+        en: 'Messages',
+        fr: 'Messages'
+      },
+      preview: {
+        message1: {
+          ar: 'مرحباً، كيف حالك؟',
+          en: 'Hey, How are you?',
+          fr: 'Salut, comment allez-vous ?'
+        },
+        message2: {
+          ar: 'ما هي خططك لهذا الأسبوع؟',
+          en: 'What do you have planned this week?',
+          fr: 'Qu\'avez-vous prévu cette semaine ?'
+        },
+        message3: {
+          ar: 'كيف تصف نفسك في ثلاث كلمات؟',
+          en: 'How would you describe yourself in three words?',
+          fr: 'Comment vous décririez-vous en trois mots ?'
+        },
+        message4: {
+          ar: 'كيف تتخلص من التوتر؟',
+          en: 'How do you relieve stress?',
+          fr: 'Comment gérez-vous le stress ?'
+        }
+      },
+      time: {
+        now: {
+          ar: 'الآن',
+          en: 'Now',
+          fr: 'Maintenant'
+        },
+        yesterday: {
+          ar: 'أمس',
+          en: 'Yesterday',
+          fr: 'Hier'
+        }
+      }
     }
   };
 
@@ -355,54 +481,69 @@ export default function Dashboard() {
     {
       id: 1,
       sender: {
-        name: 'Christopher Campbell',
+        name: language === 'ar' ? 'كريستوفر كامبل' : language === 'fr' ? 'Christopher Campbell' : 'Christopher Campbell',
         avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'Hey, How are you?',
-      time: '10:30 AM',
+      preview: translations.messages.preview.message1[language],
+      time: translations.messages.time.now[language],
       unread: true,
     },
     {
       id: 2,
       sender: {
-        name: 'Houcine Ncib',
+        name: language === 'ar' ? 'حسين نصيب' : language === 'fr' ? 'Houcine Ncib' : 'Houcine Ncib',
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'What do you have planned this weekend?',
-      time: 'Yesterday',
+      preview: translations.messages.preview.message2[language],
+      time: translations.messages.time.yesterday[language],
       unread: false,
     },
     {
       id: 3,
       sender: {
-        name: 'Kelly Sikkema',
+        name: language === 'ar' ? 'كيلي سيكيما' : language === 'fr' ? 'Kelly Sikkema' : 'Kelly Sikkema',
         avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'How would you describe yourself in three words?',
+      preview: translations.messages.preview.message3[language],
       time: 'Apr 12',
       unread: false,
     },
     {
       id: 4,
       sender: {
-        name: 'Ethan Hoover',
+        name: language === 'ar' ? 'إيثان هوفر' : language === 'fr' ? 'Ethan Hoover' : 'Ethan Hoover',
         avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
       },
-      preview: 'How do you relieve stress?',
+      preview: translations.messages.preview.message4[language],
       time: 'Apr 10',
       unread: false,
-    },
-    {
-      id: 5,
-      sender: {
-        name: 'Joseph Pearson',
-        avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      },
-      preview: "What's your sign?",
-      time: 'Apr 8',
-      unread: false,
-    },
+    }
   ];
+
+  // Initialize profile data
+  useEffect(() => {
+    setProfileData({
+      fullName: translations.profile.name[language],
+      email: 'asma@gmail.com',
+      phone: translations.profile.personalInfo.phone.value,
+      country: translations.profile.personalInfo.country.value[language]
+    });
+  }, [language]);
+
+  const handleSave = () => {
+    setIsEditing(false);
+    // Here you would typically make an API call to save the changes
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setProfileData({
+      fullName: translations.profile.name[language],
+      email: 'asma@gmail.com',
+      phone: translations.profile.personalInfo.phone.value,
+      country: translations.profile.personalInfo.country.value[language]
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -581,7 +722,7 @@ export default function Dashboard() {
           {/* Profile Tab */}
           {activeTab === 'profile' && (
             <div>
-              <h1 className="text-2xl font-bold mb-6">الملف الشخصي</h1>
+              <h1 className="text-2xl font-bold mb-6">{translations.navigation.profile[language]}</h1>
 
               <div className="bg-white rounded-lg shadow-md overflow-hidden p-6 mb-8">
                 <div className="flex flex-col md:flex-row">
@@ -589,39 +730,80 @@ export default function Dashboard() {
                     <div className="relative h-48 w-48 rounded-full overflow-hidden mx-auto">
                       <Image
                         src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                        alt="صورة الملف الشخصي"
+                        alt={translations.profile.profileImage[language]}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="text-center mt-4">
-                      <h2 className="text-xl font-bold">أسماء علي</h2>
-                      <p className="text-gray-500">asma@gmail.com</p>
+                      <h2 className="text-xl font-bold">{translations.profile.name[language]}</h2>
+                      <p className="text-gray-500">{translations.profile.email[language]}</p>
+                      <p className="text-sm text-gray-500 mt-1">{translations.profile.joinDate.value[language]}</p>
                     </div>
                   </div>
 
                   <div className="md:w-2/3 md:pr-8">
-                    <h3 className="text-lg font-bold mb-4">المعلومات الشخصية</h3>
+                    <h3 className="text-lg font-bold mb-4">{translations.profile.personalInfo.title[language]}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div>
-                        <p className="text-sm text-gray-500">الاسم الكامل:</p>
-                        <p className="font-medium">أسماء علي</p>
+                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.fullName.label[language]}:</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.fullName}
+                            onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.fullName}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">البريد الإلكتروني:</p>
-                        <p className="font-medium">asma@gmail.com</p>
+                        <p className="text-sm text-gray-500">{translations.profile.email[language]}:</p>
+                        {isEditing ? (
+                          <input
+                            type="email"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.email}
+                            onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.email}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">رقم الهاتف:</p>
-                        <p className="font-medium">+51 966 696 123</p>
+                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.phone.label[language]}:</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.phone}
+                            onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.phone}</p>
+                        )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">الدولة:</p>
-                        <p className="font-medium">المغرب</p>
+                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.country.label[language]}:</p>
+                        {isEditing ? (
+                          <input
+                            type="text"
+                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                            value={profileData.country}
+                            onChange={(e) => setProfileData({ ...profileData, country: e.target.value })}
+                          />
+                        ) : (
+                          <p className="font-medium">{profileData.country}</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">{translations.profile.joinDate.label[language]}:</p>
+                        <p className="font-medium">{translations.profile.joinDate.value[language]}</p>
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-bold mb-4">مجموعات التقييمات</h3>
+                    <h3 className="text-lg font-bold mb-4">{translations.profile.ratings.title[language]}</h3>
                     <div className="flex items-center mb-6">
                       <div className="flex text-yellow-400">
                         {[1, 2, 3, 4].map(star => (
@@ -629,88 +811,35 @@ export default function Dashboard() {
                         ))}
                         <Star className="h-5 w-5" />
                       </div>
-                      <span className="text-gray-500 ml-2">4/5</span>
+                      <span className="text-gray-500 ml-2">{translations.profile.ratings.value}</span>
                     </div>
 
-                    <button className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                      تعديل الملف الشخصي
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-                <h3 className="text-lg font-bold mb-4">إعدادات المستخدم</h3>
-
-                <div className="mb-6">
-                  <h4 className="text-md font-medium mb-2">التفاصيل</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">الاسم الكامل:</label>
-                      <input
-                        type="text"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="أسماء علي"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">البريد الإلكتروني:</label>
-                      <input
-                        type="email"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="asma@gmail.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">الدولة:</label>
-                      <input
-                        type="text"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        defaultValue="المغرب"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">رقم الهاتف:</label>
-                      <div className="flex">
-                        <select className="border border-gray-300 rounded-r-none rounded-l-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-                          <option>+51</option>
-                        </select>
-                        <input
-                          type="text"
-                          className="flex-1 border border-gray-300 rounded-l-none rounded-r-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                          defaultValue="969 123 456"
-                        />
-                      </div>
+                    <div className="flex gap-3">
+                      {isEditing ? (
+                        <>
+                          <button
+                            onClick={handleSave}
+                            className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
+                          >
+                            {translations.profile.userSettings.saveChanges[language]}
+                          </button>
+                          <button
+                            onClick={handleCancel}
+                            className="bg-gray-100 text-gray-600 px-6 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors"
+                          >
+                            {language === 'ar' ? 'إلغاء' : language === 'fr' ? 'Annuler' : 'Cancel'}
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => setIsEditing(true)}
+                          className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
+                        >
+                          {translations.profile.editButton[language]}
+                        </button>
+                      )}
                     </div>
                   </div>
-                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    حفظ التغييرات
-                  </button>
-                </div>
-
-                <div className="pt-6 border-t border-gray-200">
-                  <h4 className="text-md font-medium mb-2">كلمة المرور</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">تغيير كلمة المرور</label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder="أدخل كلمة المرور الخاصة بك..."
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">تأكيد كلمة المرور</label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder="تأكيد كلمة المرور..."
-                      />
-                    </div>
-                  </div>
-                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    تحديث كلمة المرور
-                  </button>
                 </div>
               </div>
             </div>
