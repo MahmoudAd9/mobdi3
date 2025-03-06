@@ -834,6 +834,10 @@ export default function BrandDashboard() {
                           <p className="font-medium">{profileData.industry}</p>
                         )}
                       </div>
+                      <div>
+                        <p className="text-sm text-gray-500">{translations.companyInfo.joinDate.label[language]}</p>
+                        <p className="font-medium">{translations.companyInfo.joinDate.value[language]}</p>
+                      </div>
                     </div>
 
                     <h3 className="text-lg font-bold mb-4">{translations.companyDescription.title[language]}</h3>
