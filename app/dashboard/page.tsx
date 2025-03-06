@@ -50,6 +50,28 @@ export default function Dashboard() {
         ar: 'إنشاء إعلان جديد',
         en: 'Create New Ad',
         fr: 'Créer une Annonce'
+      },
+      settings: {
+        ar: 'الإعدادات',
+        en: 'Settings',
+        fr: 'Paramètres'
+      }
+    },
+    profile: {
+      profileImage: {
+        ar: 'صورة الملف الشخصي',
+        en: 'Profile Image',
+        fr: 'Image de Profil'
+      },
+      email: {
+        ar: 'البريد الإلكتروني',
+        en: 'Email',
+        fr: 'Email'
+      },
+      name: {
+        ar: 'أسماء علي',
+        en: 'Asma Ali',
+        fr: 'Asma Ali'
       }
     },
     stats: {
@@ -180,17 +202,17 @@ export default function Dashboard() {
 
   const navigationItems = {
     brand: [
-      { id: 'overview', label: 'نظرة عامة', icon: BarChart3 },
-      { id: 'projects', label: 'المشاريع', icon: Package },
-      { id: 'messages', label: 'الرسائل', icon: MessageSquare },
-      { id: 'profile', label: 'الملف الشخصي', icon: Users }
+      { id: 'overview', label: translations.navigation.overview[language], icon: BarChart3 },
+      { id: 'projects', label: translations.navigation.projects[language], icon: Package },
+      { id: 'messages', label: translations.navigation.messages[language], icon: MessageSquare },
+      { id: 'profile', label: translations.navigation.profile[language], icon: Users }
     ],
     creator: [
-      { id: 'overview', label: 'نظرة عامة', icon: BarChart3 },
-      { id: 'campaigns', label: 'الحملات', icon: Package },
-      { id: 'messages', label: 'الرسائل', icon: MessageSquare },
-      { id: 'profile', label: 'الملف الشخصي', icon: User },
-      { id: 'settings', label: 'الإعدادات', icon: Settings }
+      { id: 'overview', label: translations.navigation.overview[language], icon: BarChart3 },
+      { id: 'campaigns', label: translations.navigation.projects[language], icon: Package },
+      { id: 'messages', label: translations.navigation.messages[language], icon: MessageSquare },
+      { id: 'profile', label: translations.navigation.profile[language], icon: User },
+      { id: 'settings', label: translations.navigation.settings[language], icon: Settings }
     ]
   };
 
@@ -325,68 +347,39 @@ export default function Dashboard() {
             <div className="relative h-24 w-24 rounded-full overflow-hidden mx-auto mb-4">
               <Image
                 src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                alt="صورة الملف الشخصي"
+                alt={translations.profile.profileImage[language]}
                 fill
                 className="object-cover"
               />
             </div>
-            <h3 className="text-xl font-bold">أسماء علي</h3>
+            <h3 className="text-xl font-bold">{translations.profile.name[language]}</h3>
             <p className="text-gray-500 text-sm">asma@gmail.com</p>
           </div>
 
           <nav className="space-y-2">
-            <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'overview'
-                ? 'bg-purple-100 text-purple-600'
-                : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              onClick={() => setActiveTab('overview')}
-            >
-              <BarChart3 className="h-5 w-5" />
-              <span>{translations.navigation.overview[language]}</span>
-            </button>
-
-            <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'projects'
-                ? 'bg-purple-100 text-purple-600'
-                : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              onClick={() => setActiveTab('projects')}
-            >
-              <Package className="h-5 w-5" />
-              <span>{translations.navigation.projects[language]}</span>
-            </button>
-
-            <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'messages'
-                ? 'bg-purple-100 text-purple-600'
-                : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              onClick={() => setActiveTab('messages')}
-            >
-              <MessageSquare className="h-5 w-5" />
-              <span>{translations.navigation.messages[language]}</span>
-            </button>
-
-            <button
-              className={`w-full flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-right ${activeTab === 'profile'
-                ? 'bg-purple-100 text-purple-600'
-                : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              onClick={() => setActiveTab('profile')}
-            >
-              <Users className="h-5 w-5" />
-              <span>{translations.navigation.profile[language]}</span>
-            </button>
+            {navigationItems[userRole].map((item) => (
+              <button
+                key={item.id}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg ${activeTab === item.id
+                    ? 'bg-purple-100 text-purple-600'
+                    : 'text-gray-600 hover:bg-gray-100'
+                  } ${language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}
+                onClick={() => setActiveTab(item.id)}
+              >
+                <item.icon className="h-5 w-5 flex-shrink-0" />
+                <span className="flex-1 truncate">{item.label}</span>
+              </button>
+            ))}
           </nav>
 
           <div className="mt-8 pt-8 border-t border-gray-200">
             <Link
               href="/dashboard/create-ad"
-              className="w-full bg-purple-600 text-white flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors"
+              className={`w-full bg-purple-600 text-white flex items-center gap-2 px-4 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'
+                }`}
             >
-              <Package className="h-5 w-5" />
-              <span>{translations.navigation.createAd[language]}</span>
+              <Package className="h-5 w-5 flex-shrink-0" />
+              <span className="flex-1 truncate">{translations.navigation.createAd[language]}</span>
             </Link>
           </div>
         </div>
@@ -483,7 +476,7 @@ export default function Dashboard() {
           {/* Messages Tab */}
           {activeTab === 'messages' && (
             <div>
-              <h1 className="text-2xl font-bold mb-6">الرسائل</h1>
+              <h1 className="text-2xl font-bold mb-6">{translations.navigation.messages[language]}</h1>
 
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 {messages.map(message => (
