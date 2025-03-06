@@ -270,6 +270,18 @@ export default function BrandDashboard() {
           en: 'January 15, 2025',
           fr: '15 Janvier 2025'
         }
+      },
+      ratings: {
+        title: {
+          ar: 'تقييم الشركة',
+          en: 'Company Ratings',
+          fr: 'Évaluation de l\'Entreprise'
+        },
+        count: {
+          ar: 'عدد التقييمات',
+          en: 'Number of Ratings',
+          fr: 'Nombre de Évaluations'
+        }
       }
     },
     companyDescription: {
@@ -332,7 +344,6 @@ export default function BrandDashboard() {
     email: 'asma@gmail.com',
     phone: '+51 966 696 123',
     country: translations.companyInfo.country.value[language],
-    industry: translations.companyInfo.industry.value[language],
     description: translations.companyDescription.content[language]
   });
 
@@ -341,7 +352,6 @@ export default function BrandDashboard() {
     setProfileData(prevData => ({
       ...prevData,
       country: translations.companyInfo.country.value[language],
-      industry: translations.companyInfo.industry.value[language],
       description: translations.companyDescription.content[language]
     }));
   }, [language]);
@@ -359,7 +369,6 @@ export default function BrandDashboard() {
       email: 'asma@gmail.com',
       phone: '+51 966 696 123',
       country: translations.companyInfo.country.value[language],
-      industry: translations.companyInfo.industry.value[language],
       description: translations.companyDescription.content[language]
     });
   };
@@ -822,22 +831,21 @@ export default function BrandDashboard() {
                         )}
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">{translations.companyInfo.industry.label[language]}</p>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            value={profileData.industry}
-                            onChange={(e) => setProfileData({ ...profileData, industry: e.target.value })}
-                          />
-                        ) : (
-                          <p className="font-medium">{profileData.industry}</p>
-                        )}
-                      </div>
-                      <div>
                         <p className="text-sm text-gray-500">{translations.companyInfo.joinDate.label[language]}</p>
                         <p className="font-medium">{translations.companyInfo.joinDate.value[language]}</p>
                       </div>
+                    </div>
+
+                    <h3 className="text-lg font-bold mb-4">{translations.companyInfo.ratings.title[language]}</h3>
+                    <div className="flex items-center mb-6">
+                      <div className="flex text-yellow-400">
+                        {[1, 2, 3, 4].map(star => (
+                          <Star key={star} className="h-5 w-5 fill-current" />
+                        ))}
+                        <Star className="h-5 w-5" />
+                      </div>
+                      <span className="text-gray-500 ml-2">4.0/5</span>
+                      <span className="text-sm text-gray-500 ml-2">({translations.companyInfo.ratings.count[language]})</span>
                     </div>
 
                     <h3 className="text-lg font-bold mb-4">{translations.companyDescription.title[language]}</h3>
