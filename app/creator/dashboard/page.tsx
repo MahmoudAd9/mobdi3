@@ -667,9 +667,9 @@ export default function Dashboard() {
                       <p className="text-sm text-gray-500 truncate">{project.description[language]}</p>
                       <div className="mt-2 flex justify-between items-center">
                         <span className="text-sm font-medium text-purple-600">{project.price}</span>
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
-                          {project.status}
-                        </span>
+                        <div className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
+                          {translations.recentProjects.status[project.status][language]}
+                        </div>
                       </div>
                       <p className="text-xs text-gray-400 mt-1">{project.date}</p>
                     </div>
@@ -695,7 +695,7 @@ export default function Dashboard() {
                         project.status === 'inProgress' ? 'orange' :
                           'blue' // Change text color for completed status
                     }}>
-                      {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+                      {translations.recentProjects.status[project.status][language]}
                     </div>
                     {/* Image */}
                     <Image
