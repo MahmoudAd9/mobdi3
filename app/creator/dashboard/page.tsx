@@ -686,21 +686,26 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {projects.map(project => (
                   <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
-                    {/* Status Bar */}
-                    <div className={`h-2 ${project.status === 'new' ? 'bg-blue-500' : project.status === 'inProgress' ? 'bg-orange-500' : 'bg-green-500'}`}></div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title}</h3>
-                      <p className="text-sm text-gray-500 truncate">{project.description}</p>
-                      <div className="mt-4 flex justify-between items-center">
-                        <span className="text-lg font-medium text-purple-600">{project.price}</span>
-                        <span className={`px-3 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
-                          {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1">{project.date}</p>
-                      <div className="mt-4">
+                    {/* Status Indicator */}
+                    <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-semibold text-white rounded-full ${project.status === 'new' ? 'bg-blue-500' : project.status === 'inProgress' ? 'bg-orange-500' : 'bg-green-500'}`}>
+                      {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+                    </div>
+                    {/* Image */}
+                    <Image
+                      src="/path/to/image.jpg" // Replace with the actual image path
+                      alt={project.title}
+                      width={400}
+                      height={250}
+                      className="w-full h-40 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
+                      <p className="text-sm text-gray-500 mt-1">{project.description}</p>
+                      <p className="text-xs text-gray-400 mt-2">{project.date} - {project.date}</p>
+                      <div className="flex justify-between items-center mt-4">
+                        <span className="text-xl font-bold text-purple-600">{project.price}</span>
                         <Link href={`/projects/${project.id}`} className="inline-block bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
-                          View Details
+                          عرض التفاصيل
                         </Link>
                       </div>
                     </div>
