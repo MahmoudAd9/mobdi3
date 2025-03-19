@@ -628,57 +628,23 @@ export default function Dashboard() {
               </div>
 
               {/* Recent Projects */}
-              <h2 className="text-xl font-bold mb-4">{translations.recentProjects.title[language]}</h2>
-              <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
-                          {translations.recentProjects.table.project[language]}
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">
-                          {translations.recentProjects.table.client[language]}
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">
-                          {translations.recentProjects.table.type[language]}
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          {translations.recentProjects.table.price[language]}
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          {translations.recentProjects.table.status[language]}
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          {translations.recentProjects.table.date[language]}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {recentProjects.map(project => (
-                        <tr key={project.id} className="hover:bg-gray-50">
-                          <td className="px-4 py-4">
-                            <div className="text-sm font-medium text-gray-900 truncate max-w-[200px]">{project.title[language]}</div>
-                            <div className="text-xs text-gray-500 truncate max-w-[200px]">{project.description[language]}</div>
-                          </td>
-                          <td className="px-4 py-4">
-                            <div className="text-sm text-gray-500 truncate max-w-[150px]">{project.client}</div>
-                          </td>
-                          <td className="px-4 py-4">
-                            <div className="text-sm text-gray-500 truncate max-w-[150px]">{project.type}</div>
-                          </td>
-                          <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-purple-600">{project.price}</td>
-                          <td className="px-4 py-4 whitespace-nowrap">
-                            <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${project.statusColor}`}>
-                              {project.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{project.date}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <h2 className="text-2xl font-bold mb-6">{translations.recentProjects.title[language]}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {recentProjects.map(project => (
+                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title[language]}</h3>
+                      <p className="text-sm text-gray-500 truncate">{project.description[language]}</p>
+                      <div className="mt-2 flex justify-between items-center">
+                        <span className="text-sm font-medium text-purple-600">{project.price}</span>
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
+                          {project.status}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">{project.date}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
