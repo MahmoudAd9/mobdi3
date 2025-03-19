@@ -21,7 +21,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [userRole, setUserRole] = useState('brand'); // 'brand' or 'creator'
+  const [userRole, setUserRole] = useState<'brand' | 'creator'>('brand'); // Specify the type here
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     fullName: '',
