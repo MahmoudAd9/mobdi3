@@ -686,6 +686,8 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {projects.map(project => (
                   <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
+                    {/* Status Bar */}
+                    <div className={`h-2 ${project.status === 'new' ? 'bg-blue-500' : project.status === 'inProgress' ? 'bg-orange-500' : 'bg-green-500'}`}></div>
                     <div className="p-6">
                       <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title}</h3>
                       <p className="text-sm text-gray-500 truncate">{project.description}</p>
