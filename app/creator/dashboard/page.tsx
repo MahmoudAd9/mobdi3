@@ -401,7 +401,7 @@ export default function Dashboard() {
     ],
     creator: [
       { id: 'overview', label: translations.navigation.overview[language], icon: BarChart3 },
-      { id: 'campaigns', label: translations.navigation.projects[language], icon: Package },
+      { id: 'projects', label: translations.navigation.projects[language], icon: Package },
       { id: 'messages', label: translations.navigation.messages[language], icon: MessageSquare },
       { id: 'profile', label: translations.navigation.profile[language], icon: User },
       { id: 'settings', label: translations.navigation.settings[language], icon: Settings }
@@ -473,6 +473,36 @@ export default function Dashboard() {
         en: 'Focus on comfort and lightness during running',
         fr: 'Accent sur le confort et la légèreté pendant la course'
       },
+      statusColor: 'bg-green-100 text-green-600',
+    },
+  ];
+
+  const projects = [
+    {
+      id: 1,
+      title: 'Project Alpha',
+      status: 'new',
+      price: '$200',
+      date: '2025-04-15',
+      description: 'Description for Project Alpha',
+      statusColor: 'bg-blue-100 text-blue-600',
+    },
+    {
+      id: 2,
+      title: 'Project Beta',
+      status: 'inProgress',
+      price: '$300',
+      date: '2025-04-10',
+      description: 'Description for Project Beta',
+      statusColor: 'bg-yellow-100 text-yellow-600',
+    },
+    {
+      id: 3,
+      title: 'Project Gamma',
+      status: 'completed',
+      price: '$250',
+      date: '2025-04-05',
+      description: 'Description for Project Gamma',
       statusColor: 'bg-green-100 text-green-600',
     },
   ];
@@ -639,6 +669,30 @@ export default function Dashboard() {
                         <span className="text-sm font-medium text-purple-600">{project.price}</span>
                         <span className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
                           {project.status}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">{project.date}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Projects Tab */}
+          {activeTab === 'projects' && (
+            <div>
+              <h1 className="text-2xl font-bold mb-6">{translations.navigation.projects[language]}</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {projects.map(project => (
+                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title}</h3>
+                      <p className="text-sm text-gray-500 truncate">{project.description}</p>
+                      <div className="mt-2 flex justify-between items-center">
+                        <span className="text-sm font-medium text-purple-600">{project.price}</span>
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
+                          {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                         </span>
                       </div>
                       <p className="text-xs text-gray-400 mt-1">{project.date}</p>
