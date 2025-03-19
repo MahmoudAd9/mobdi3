@@ -687,7 +687,14 @@ export default function Dashboard() {
                 {projects.map(project => (
                   <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
                     {/* Status Indicator */}
-                    <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-semibold text-white rounded-full ${project.status === 'new' ? 'bg-blue-500' : project.status === 'inProgress' ? 'bg-orange-500' : 'bg-green-500'}`}>
+                    <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-semibold rounded-full`} style={{
+                      backgroundColor: project.status === 'new' ? '#DCFCE7' :
+                        project.status === 'inProgress' ? '#FEF9C3' :
+                          '#DBEAFE',
+                      color: project.status === 'new' ? 'green' :
+                        project.status === 'inProgress' ? 'orange' :
+                          'blue' // Change text color for completed status
+                    }}>
                       {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                     </div>
                     {/* Image */}
