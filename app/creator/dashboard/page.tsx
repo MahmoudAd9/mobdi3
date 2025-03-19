@@ -685,17 +685,22 @@ export default function Dashboard() {
               <h1 className="text-2xl font-bold mb-6">{translations.navigation.projects[language]}</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {projects.map(project => (
-                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div className="p-4">
+                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
+                    <div className="p-6">
                       <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title}</h3>
                       <p className="text-sm text-gray-500 truncate">{project.description}</p>
-                      <div className="mt-2 flex justify-between items-center">
-                        <span className="text-sm font-medium text-purple-600">{project.price}</span>
-                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
+                      <div className="mt-4 flex justify-between items-center">
+                        <span className="text-lg font-medium text-purple-600">{project.price}</span>
+                        <span className={`px-3 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
                           {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                         </span>
                       </div>
                       <p className="text-xs text-gray-400 mt-1">{project.date}</p>
+                      <div className="mt-4">
+                        <Link href={`/projects/${project.id}`} className="inline-block bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
+                          View Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 ))}
