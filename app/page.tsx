@@ -99,7 +99,7 @@ export default function Home() {
           text: {
             ar: '"أخيرًا وجدت منصة تساعدني في الوصول إلى المؤثرين المناسبين لمنتجاتي! 🌟 العلامات التجارية السابقة كانت بحاجة للبحث في أماكن نفسي، لكن هنا أصبحت مهمة البحث سهلة والتواصل مع المؤثرين أسهل. النتائج كانت مذهلة!"',
             en: '"Finally found a platform that helps me reach the right influencers for my products! 🌟 Previous brands needed to search in my own places, but here the search task became easy and communication with influencers easier. The results were amazing!"',
-            fr: '"J\'ai enfin trouvé une plateforme qui m\'aide à atteindre les bons influenceurs pour mes produits! 🌟 Les marques précédentes devaient chercher dans mes propres endroits, mais ici la tâche de recherche est devenue facile et la communication avec les influenceurs plus facile. Les résultats étaient incroyables!"'
+            fr: '"J\'ai enfin trouvé une plateforme qui m\'a aidé à atteindre les bons influenceurs pour mes produits! 🌟 Les marques précédentes devaient chercher dans mes propres endroits, mais ici la tâche de recherche est devenue facile et la communication avec les influenceurs plus facile. Les résultats étaient incroyables!"'
           },
           author: {
             ar: 'خالد الناصري',

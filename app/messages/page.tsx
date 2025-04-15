@@ -127,9 +127,6 @@ export default function Messages() {
     e.preventDefault();
     if (message.trim() === '') return;
     
-    // In a real app, you would send this message to your backend
-    console.log('Sending message:', message);
-    
     // Clear the input
     setMessage('');
   };

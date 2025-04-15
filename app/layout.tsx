@@ -4,9 +4,10 @@ import { Inter, Tajawal } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 const inter = Inter({ subsets: ['latin'] });
-const tajawal = Tajawal({ 
+const tajawal = Tajawal({
   weight: ['300', '400', '500', '700', '800', '900'],
   subsets: ['arabic'],
   variable: '--font-tajawal',
@@ -23,13 +24,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl" className={`${tajawal.variable}`}>
-      <body className="font-tajawal">
-        <LanguageProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </LanguageProvider>
+    <html className={`${tajawal.variable}`} suppressHydrationWarning>
+      <body className="font-tajawal bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-200">
+        <ThemeProvider>
+          <LanguageProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

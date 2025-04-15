@@ -26,14 +26,14 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Update direction based on language
     setDir(languageDirection(language));
-    
+
     // Save language preference to localStorage
     localStorage.setItem('language', language);
-    
+
     // Update HTML attributes
     document.documentElement.lang = language;
     document.documentElement.dir = languageDirection(language);
-    
+
     // Add appropriate font class
     if (language === 'ar') {
       document.documentElement.classList.add('font-tajawal');

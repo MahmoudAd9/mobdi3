@@ -21,7 +21,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [userRole, setUserRole] = useState<'brand' | 'creator'>('brand'); // Specify the type here
+  const [userRole, setUserRole] = useState<'brand' | 'creator'>('brand');
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     fullName: '',
@@ -29,364 +29,105 @@ export default function Dashboard() {
     phone: '+51 966 696 123',
     country: ''
   });
-  const { language } = useLanguage();
+
+  const { language: rawLanguage } = useLanguage();
+  const language = ['ar', 'en', 'fr'].includes(rawLanguage) ? rawLanguage : 'en';
+
+
 
   const translations = {
     navigation: {
-      overview: {
-        ar: 'نظرة عامة',
-        en: 'Overview',
-        fr: 'Aperçu'
-      },
-      projects: {
-        ar: 'المشاريع',
-        en: 'Projects',
-        fr: 'Projets'
-      },
-      messages: {
-        ar: 'الرسائل',
-        en: 'Messages',
-        fr: 'Messages'
-      },
-      profile: {
-        ar: 'الملف الشخصي',
-        en: 'Profile',
-        fr: 'Profil'
-      },
-      createAd: {
-        ar: 'إنشاء إعلان جديد',
-        en: 'Create New Ad',
-        fr: 'Créer une Annonce'
-      },
-      settings: {
-        ar: 'الإعدادات',
-        en: 'Settings',
-        fr: 'Paramètres'
-      }
+      overview: { ar: 'نظرة عامة', en: 'Overview', fr: 'Aperçu' },
+      projects: { ar: 'المشاريع', en: 'Projects', fr: 'Projets' },
+      messages: { ar: 'الرسائل', en: 'Messages', fr: 'Messages' },
+      profile: { ar: 'الملف الشخصي', en: 'Profile', fr: 'Profil' },
+      createAd: { ar: 'إنشاء إعلان جديد', en: 'Create New Ad', fr: 'Créer une Annonce' },
+      settings: { ar: 'الإعدادات', en: 'Settings', fr: 'Paramètres' }
     },
     profile: {
-      profileImage: {
-        ar: 'صورة الملف الشخصي',
-        en: 'Profile Image',
-        fr: 'Image de Profil'
-      },
-      email: {
-        ar: 'البريد الإلكتروني',
-        en: 'Email',
-        fr: 'Email'
-      },
-      name: {
-        ar: 'أسماء علي',
-        en: 'Asma Ali',
-        fr: 'Asma Ali'
-      },
+      profileImage: { ar: 'صورة الملف الشخصي', en: 'Profile Image', fr: 'Image de Profil' },
+      email: { ar: 'البريد الإلكتروني', en: 'Email', fr: 'Email' },
+      name: { ar: 'أسماء علي', en: 'Asma Ali', fr: 'Asma Ali' },
       joinDate: {
-        label: {
-          ar: 'تاريخ الانضمام',
-          en: 'Join Date',
-          fr: 'Date d\'Inscription'
-        },
-        value: {
-          ar: '15 يناير 2025',
-          en: 'January 15, 2025',
-          fr: '15 Janvier 2025'
-        }
+        label: { ar: 'تاريخ الانضمام', en: 'Join Date', fr: "Date d'Inscription" },
+        value: { ar: '15 يناير 2025', en: 'January 15, 2025', fr: '15 Janvier 2025' }
       },
       personalInfo: {
-        title: {
-          ar: 'المعلومات الشخصية',
-          en: 'Personal Information',
-          fr: 'Informations Personnelles'
-        },
-        fullName: {
-          label: {
-            ar: 'الاسم الكامل',
-            en: 'Full Name',
-            fr: 'Nom Complet'
-          }
-        },
-        phone: {
-          label: {
-            ar: 'رقم الهاتف',
-            en: 'Phone Number',
-            fr: 'Numéro de Téléphone'
-          },
-          value: '+51 966 696 123'
-        },
-        country: {
-          label: {
-            ar: 'الدولة',
-            en: 'Country',
-            fr: 'Pays'
-          },
-          value: {
-            ar: 'المغرب',
-            en: 'Morocco',
-            fr: 'Maroc'
-          }
-        }
+        title: { ar: 'المعلومات الشخصية', en: 'Personal Information', fr: 'Informations Personnelles' },
+        fullName: { label: { ar: 'الاسم الكامل', en: 'Full Name', fr: 'Nom Complet' } },
+        phone: { label: { ar: 'رقم الهاتف', en: 'Phone Number', fr: 'Numéro de Téléphone' }, value: '+51 966 696 123' },
+        country: { label: { ar: 'الدولة', en: 'Country', fr: 'Pays' }, value: { ar: 'المغرب', en: 'Morocco', fr: 'Maroc' } }
       },
-      ratings: {
-        title: {
-          ar: 'مجموعات التقييمات',
-          en: 'Rating Groups',
-          fr: 'Groupes d\'Évaluation'
-        },
-        value: '4/5'
-      },
-      editButton: {
-        ar: 'تعديل الملف الشخصي',
-        en: 'Edit Profile',
-        fr: 'Modifier le Profil'
-      },
+      ratings: { title: { ar: 'مجموعات التقييمات', en: 'Rating Groups', fr: "Groupes d'Évaluation" }, value: '4/5' },
+      editButton: { ar: 'تعديل الملف الشخصي', en: 'Edit Profile', fr: 'Modifier le Profil' },
       userSettings: {
-        title: {
-          ar: 'إعدادات المستخدم',
-          en: 'User Settings',
-          fr: 'Paramètres Utilisateur'
-        },
-        details: {
-          title: {
-            ar: 'التفاصيل',
-            en: 'Details',
-            fr: 'Détails'
-          }
-        },
-        saveChanges: {
-          ar: 'حفظ التغييرات',
-          en: 'Save Changes',
-          fr: 'Enregistrer les Modifications'
-        }
+        title: { ar: 'إعدادات المستخدم', en: 'User Settings', fr: 'Paramètres Utilisateur' },
+        details: { title: { ar: 'التفاصيل', en: 'Details', fr: 'Détails' } },
+        saveChanges: { ar: 'حفظ التغييرات', en: 'Save Changes', fr: 'Enregistrer les Modifications' }
       }
     },
     stats: {
-      revenue: {
-        title: {
-          ar: 'إجمالي الأرباح',
-          en: 'Total Revenue',
-          fr: 'Revenu Total'
-        }
-      },
-      newRequests: {
-        title: {
-          ar: 'الطلبات الجديدة',
-          en: 'New Requests',
-          fr: 'Nouvelles Demandes'
-        }
-      },
-      pendingAds: {
-        title: {
-          ar: 'إعلانات قيد التنفيذ',
-          en: 'Pending Ads',
-          fr: 'Annonces en Attente'
-        }
-      },
-      completedAds: {
-        title: {
-          ar: 'الإعلانات المكتملة',
-          en: 'Completed Ads',
-          fr: 'Annonces Terminées'
-        }
-      },
-      totalClients: {
-        title: {
-          ar: 'عدد العملاء المتعامل معهم',
-          en: 'Total Clients',
-          fr: 'Clients Totaux'
-        }
-      },
-      rating: {
-        title: {
-          ar: 'متوسط التقييم',
-          en: 'Average Rating',
-          fr: 'Note Moyenne'
-        }
-      }
+      revenue: { title: { ar: 'إجمالي الأرباح', en: 'Total Revenue', fr: 'Revenu Total' } },
+      newRequests: { title: { ar: 'الطلبات الجديدة', en: 'New Requests', fr: 'Nouvelles Demandes' } },
+      pendingAds: { title: { ar: 'إعلانات قيد التنفيذ', en: 'Pending Ads', fr: 'Annonces en Attente' } },
+      completedAds: { title: { ar: 'الإعلانات المكتملة', en: 'Completed Ads', fr: 'Annonces Terminées' } },
+      totalClients: { title: { ar: 'عدد العملاء المتعامل معهم', en: 'Total Clients', fr: 'Clients Totaux' } },
+      rating: { title: { ar: 'متوسط التقييم', en: 'Average Rating', fr: 'Note Moyenne' } }
     },
-    timePeriod: {
-      sinceLastMonth: {
-        ar: 'منذ الشهر الماضي',
-        en: 'since last month',
-        fr: 'depuis le mois dernier'
-      }
-    },
+    timePeriod: { sinceLastMonth: { ar: 'منذ الشهر الماضي', en: 'since last month', fr: 'depuis le mois dernier' } },
     recentProjects: {
-      title: {
-        ar: 'أحدث المشاريع',
-        en: 'Recent Projects',
-        fr: 'Projets Récents'
-      },
+      title: { ar: 'أحدث المشاريع', en: 'Recent Projects', fr: 'Projets Récents' },
       table: {
-        project: {
-          ar: 'المشروع',
-          en: 'Project',
-          fr: 'Projet'
-        },
-        client: {
-          ar: 'العميل',
-          en: 'Client',
-          fr: 'Client'
-        },
-        type: {
-          ar: 'النوع',
-          en: 'Type',
-          fr: 'Type'
-        },
-        price: {
-          ar: 'السعر',
-          en: 'Price',
-          fr: 'Prix'
-        },
-        status: {
-          ar: 'الحالة',
-          en: 'Status',
-          fr: 'Statut'
-        },
-        date: {
-          ar: 'التاريخ',
-          en: 'Date',
-          fr: 'Date'
-        }
+        project: { ar: 'المشروع', en: 'Project', fr: 'Projet' },
+        client: { ar: 'العميل', en: 'Client', fr: 'Client' },
+        type: { ar: 'النوع', en: 'Type', fr: 'Type' },
+        price: { ar: 'السعر', en: 'Price', fr: 'Prix' },
+        status: { ar: 'الحالة', en: 'Status', fr: 'Statut' },
+        date: { ar: 'التاريخ', en: 'Date', fr: 'Date' }
       },
       status: {
-        new: {
-          ar: 'جديد',
-          en: 'New',
-          fr: 'Nouveau'
-        },
-        inProgress: {
-          ar: 'قيد التنفيذ',
-          en: 'In Progress',
-          fr: 'En Cours'
-        },
-        completed: {
-          ar: 'مكتمل',
-          en: 'Completed',
-          fr: 'Terminé'
-        }
+        new: { ar: 'جديد', en: 'New', fr: 'Nouveau' },
+        inProgress: { ar: 'قيد التنفيذ', en: 'In Progress', fr: 'En Cours' },
+        completed: { ar: 'مكتمل', en: 'Completed', fr: 'Terminé' }
       },
       types: {
-        techReview: {
-          ar: 'مراجعة تقنية',
-          en: 'Tech Review',
-          fr: 'Revue Technique'
-        },
-        productVideo: {
-          ar: 'فيديو تجربة المنتج',
-          en: 'Product Review Video',
-          fr: 'Vidéo Test Produit'
-        },
-        workoutReview: {
-          ar: 'مراجعة تجربة أثناء التمرين',
-          en: 'Workout Experience Review',
-          fr: 'Revue Expérience Sportive'
-        }
+        techReview: { ar: 'مراجعة تقنية', en: 'Tech Review', fr: 'Revue Technique' },
+        productVideo: { ar: 'فيديو تجربة المنتج', en: 'Product Review Video', fr: 'Vidéo Test Produit' },
+        workoutReview: { ar: 'مراجعة تجربة أثناء التمرين', en: 'Workout Experience Review', fr: 'Revue Expérience Sportive' }
       }
     },
     settings: {
       password: {
-        title: {
-          ar: 'تغيير كلمة المرور',
-          en: 'Change Password',
-          fr: 'Changer le Mot de Passe'
-        },
-        change: {
-          ar: 'كلمة المرور الجديدة',
-          en: 'New Password',
-          fr: 'Nouveau Mot de Passe'
-        },
-        confirm: {
-          ar: 'تأكيد كلمة المرور',
-          en: 'Confirm Password',
-          fr: 'Confirmer le Mot de Passe'
-        },
-        update: {
-          ar: 'تحديث كلمة المرور',
-          en: 'Update Password',
-          fr: 'Mettre à Jour le Mot de Passe'
-        },
-        changePlaceholder: {
-          ar: 'أدخل كلمة المرور الجديدة...',
-          en: 'Enter the new password...',
-          fr: 'Entrez le nouveau mot de passe...'
-        },
-        confirmPlaceholder: {
-          ar: 'أدخل تأكيد كلمة المرور...',
-          en: 'Enter the password confirmation...',
-          fr: 'Entrez la confirmation du mot de passe...'
-        }
+        title: { ar: 'تغيير كلمة المرور', en: 'Change Password', fr: 'Changer le Mot de Passe' },
+        change: { ar: 'كلمة المرور الجديدة', en: 'New Password', fr: 'Nouveau Mot de Passe' },
+        confirm: { ar: 'تأكيد كلمة المرور', en: 'Confirm Password', fr: 'Confirmer le Mot de Passe' },
+        update: { ar: 'تحديث كلمة المرور', en: 'Update Password', fr: 'Mettre à Jour le Mot de Passe' },
+        changePlaceholder: { ar: 'أدخل كلمة المرور الجديدة...', en: 'Enter the new password...', fr: 'Entrez le nouveau mot de passe...' },
+        confirmPlaceholder: { ar: 'أدخل تأكيد كلمة المرور...', en: 'Enter the password confirmation...', fr: 'Entrez la confirmation du mot de passe...' }
       },
       notifications: {
-        title: {
-          ar: 'إعدادات الإشعارات',
-          en: 'Notifications Settings',
-          fr: 'Paramètres des Notifications'
-        },
+        title: { ar: 'إعدادات الإشعارات', en: 'Notifications Settings', fr: 'Paramètres des Notifications' },
         email: {
-          title: {
-            ar: 'البريد الإلكتروني',
-            en: 'Email',
-            fr: 'Email'
-          },
-          description: {
-            ar: 'تلقي الإشعارات عبر البريد الإلكتروني',
-            en: 'Receive notifications via email',
-            fr: 'Recevoir les notifications par email'
-          }
+          title: { ar: 'البريد الإلكتروني', en: 'Email', fr: 'Email' },
+          description: { ar: 'تلقي الإشعارات عبر البريد الإلكتروني', en: 'Receive notifications via email', fr: 'Recevoir les notifications par email' }
         },
         push: {
-          title: {
-            ar: 'الإشعارات الصوتية',
-            en: 'Push Notifications',
-            fr: 'Notifications Push'
-          },
-          description: {
-            ar: 'تلقي الإشعارات الصوتية',
-            en: 'Receive push notifications',
-            fr: 'Recevoir les notifications push'
-          }
+          title: { ar: 'الإشعارات الصوتية', en: 'Push Notifications', fr: 'Notifications Push' },
+          description: { ar: 'تلقي الإشعارات الصوتية', en: 'Receive push notifications', fr: 'Recevoir les notifications push' }
         }
       }
     },
     messages: {
-      title: {
-        ar: 'الرسائل',
-        en: 'Messages',
-        fr: 'Messages'
-      },
+      title: { ar: 'الرسائل', en: 'Messages', fr: 'Messages' },
       preview: {
-        message1: {
-          ar: 'مرحباً، كيف حالك؟',
-          en: 'Hey, How are you?',
-          fr: 'Salut, comment allez-vous ?'
-        },
-        message2: {
-          ar: 'ما هي خططك لهذا الأسبوع؟',
-          en: 'What do you have planned this week?',
-          fr: 'Qu\'avez-vous prévu cette semaine ?'
-        },
-        message3: {
-          ar: 'كيف تصف نفسك في ثلاث كلمات؟',
-          en: 'How would you describe yourself in three words?',
-          fr: 'Comment vous décririez-vous en trois mots ?'
-        },
-        message4: {
-          ar: 'كيف تتخلص من التوتر؟',
-          en: 'How do you relieve stress?',
-          fr: 'Comment gérez-vous le stress ?'
-        }
+        message1: { ar: 'مرحباً، كيف حالك؟', en: 'Hey, How are you?', fr: 'Salut, comment allez-vous ?' },
+        message2: { ar: 'ما هي خططك لهذا الأسبوع؟', en: 'What do you have planned this week?', fr: "Qu'avez-vous prévu cette semaine ?" },
+        message3: { ar: 'كيف تصف نفسك في ثلاث كلمات؟', en: 'How would you describe yourself in three words?', fr: 'Comment vous décririez-vous en trois mots ?' },
+        message4: { ar: 'كيف تتخلص من التوتر؟', en: 'How do you relieve stress?', fr: 'Comment gérez-vous le stress ?' }
       },
       time: {
-        now: {
-          ar: 'الآن',
-          en: 'Now',
-          fr: 'Maintenant'
-        },
-        yesterday: {
-          ar: 'أمس',
-          en: 'Yesterday',
-          fr: 'Hier'
-        }
+        now: { ar: 'الآن', en: 'Now', fr: 'Maintenant' },
+        yesterday: { ar: 'أمس', en: 'Yesterday', fr: 'Hier' }
       }
     }
   };
@@ -420,59 +161,35 @@ export default function Dashboard() {
   const recentProjects = [
     {
       id: 1,
-      title: {
-        ar: 'سماعة لاسلكية جديدة',
-        en: 'New Wireless Headphones',
-        fr: 'Nouveaux Écouteurs Sans Fil'
-      },
+      title: { ar: 'سماعة لاسلكية جديدة', en: 'New Wireless Headphones', fr: 'Nouveaux Écouteurs Sans Fil' },
       client: 'TechWorld Electronics',
       type: translations.recentProjects.types.techReview[language],
       status: translations.recentProjects.status.new[language],
       price: '$200',
       date: '2025-04-15',
-      description: {
-        ar: 'التركيز على جودة الصوت وعمر البطارية',
-        en: 'Focus on sound quality and battery life',
-        fr: 'Accent sur la qualité sonore et l\'autonomie'
-      },
+      description: { ar: 'التركيز على جودة الصوت وعمر البطارية', en: 'Focus on sound quality and battery life', fr: 'Accent sur la qualité sonore et l\'autonomie' },
       statusColor: 'bg-blue-100 text-blue-600',
     },
     {
       id: 2,
-      title: {
-        ar: 'أحمر شفاه جديد',
-        en: 'New Lipstick',
-        fr: 'Nouveau Rouge à Lèvres'
-      },
+      title: { ar: 'أحمر شفاه جديد', en: 'New Lipstick', fr: 'Nouveau Rouge à Lèvres' },
       client: 'GlowBeauty Cosmetics',
       type: translations.recentProjects.types.productVideo[language],
       status: translations.recentProjects.status.inProgress[language],
       price: '$300',
       date: '2025-04-10',
-      description: {
-        ar: 'إظهار الألوان المختلفة وإبراز مقاومته للماء',
-        en: 'Showcase different colors and water resistance',
-        fr: 'Présentation des différentes couleurs et de la résistance à l\'eau'
-      },
+      description: { ar: 'إظهار الألوان المختلفة وإبراز مقاومته للماء', en: 'Showcase different colors and water resistance', fr: 'Présentation des différentes couleurs et de la résistance à l\'eau' },
       statusColor: 'bg-yellow-100 text-yellow-600',
     },
     {
       id: 3,
-      title: {
-        ar: 'حذاء رياضي جديد',
-        en: 'New Sports Shoe',
-        fr: 'Nouvelle Chaussure de Sport'
-      },
+      title: { ar: 'حذاء رياضي جديد', en: 'New Sports Shoe', fr: 'Nouvelle Chaussure de Sport' },
       client: 'FastFit Sportswear',
       type: translations.recentProjects.types.workoutReview[language],
       status: translations.recentProjects.status.completed[language],
       price: '$250',
       date: '2025-04-05',
-      description: {
-        ar: 'التركيز على الراحة والخفة أثناء الجري',
-        en: 'Focus on comfort and lightness during running',
-        fr: 'Accent sur le confort et la légèreté pendant la course'
-      },
+      description: { ar: 'التركيز على الراحة والخفة أثناء الجري', en: 'Focus on comfort and lightness during running', fr: 'Accent sur le confort et la légèreté pendant la course' },
       statusColor: 'bg-green-100 text-green-600',
     },
   ];
@@ -550,7 +267,7 @@ export default function Dashboard() {
     }
   ];
 
-  // Initialize profile data
+  // Initialize profile data when the language changes.
   useEffect(() => {
     setProfileData({
       fullName: translations.profile.name[language],
@@ -576,351 +293,346 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex flex-col md:flex-row">
-        {/* Sidebar */}
-        <div className="w-full md:w-64 bg-white shadow-md md:min-h-screen p-4">
-          <div className="mb-8 text-center">
-            <div className="relative h-24 w-24 rounded-full overflow-hidden mx-auto mb-4">
-              <Image
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                alt={translations.profile.profileImage[language]}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h3 className="text-xl font-bold">{translations.profile.name[language]}</h3>
-            <p className="text-gray-500 text-sm">asma@gmail.com</p>
-          </div>
-
-          <nav className="space-y-2">
-            {navigationItems[userRole].map((item) => (
-              <button
-                key={item.id}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg ${activeTab === item.id
-                  ? 'bg-purple-100 text-purple-600'
-                  : 'text-gray-600 hover:bg-gray-100'
-                  } ${language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}
-                onClick={() => setActiveTab(item.id)}
-              >
-                <item.icon className="h-5 w-5 flex-shrink-0" />
-                <span className="flex-1 truncate">{item.label}</span>
-              </button>
-            ))}
-          </nav>
-
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <Link
-              href="/dashboard/create-ad"
-              className={`w-full bg-purple-600 text-white flex items-center gap-2 px-4 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'
-                }`}
-            >
-              <Package className="h-5 w-5 flex-shrink-0" />
-              <span className="flex-1 truncate">{translations.navigation.createAd[language]}</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-6">
-          {/* Overview Tab */}
-          {activeTab === 'overview' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.navigation.overview[language]}</h1>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {stats.map(stat => (
-                  <div key={stat.id} className="bg-white p-6 rounded-lg shadow-md">
-                    <div className="flex justify-between items-start gap-4">
-                      <div className="min-w-0">
-                        <p className="text-gray-500 text-sm mb-1 truncate">{stat.title}</p>
-                        <h3 className="text-2xl font-bold">{stat.value}</h3>
-                      </div>
-                      <div className={`p-3 rounded-full flex-shrink-0 ${stat.id === 'revenue' ? 'bg-green-100 text-green-600' :
-                        stat.id === 'projects' ? 'bg-blue-100 text-blue-600' :
-                          stat.id === 'pending' ? 'bg-yellow-100 text-yellow-600' :
-                            stat.id === 'completed' ? 'bg-purple-100 text-purple-600' :
-                              stat.id === 'clients' ? 'bg-indigo-100 text-indigo-600' :
-                                'bg-orange-100 text-orange-600'
-                        }`}>
-                        <stat.icon className="h-6 w-6" />
-                      </div>
-                    </div>
-                    <div className={`mt-4 text-sm flex items-center gap-1 ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-                      }`}>
-                      <TrendingUp className={`h-4 w-4 flex-shrink-0 ${stat.changeType === 'negative' ? 'transform rotate-180' : ''
-                        }`} />
-                      <span className="truncate">{stat.change} {translations.timePeriod.sinceLastMonth[language]}</span>
-                    </div>
-                  </div>
-                ))}
+    // Outer wrapper prevents horizontal overflow and sets minimum height and background
+    <div className="min-h-screen bg-gray-50 overflow-x-hidden">
+      {/* Centered container with padding */}
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row">
+          {/* Sidebar */}
+          <div className="w-full md:w-64 bg-white shadow-md md:min-h-screen p-4 overflow-y-auto">
+            <div className="mb-8 text-center">
+              <div className="relative h-24 w-24 rounded-full overflow-hidden mx-auto mb-4">
+                <Image
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
+                  alt={translations.profile.profileImage[language]}
+                  fill
+                  className="object-cover"
+                />
               </div>
+              <h3 className="text-xl font-bold">{translations.profile.name[language]}</h3>
+              <p className="text-gray-500 text-sm">asma@gmail.com</p>
+            </div>
 
-              {/* Recent Projects */}
-              <h2 className="text-2xl font-bold mb-6">{translations.recentProjects.title[language]}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {recentProjects.map(project => (
-                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title[language]}</h3>
-                      <p className="text-sm text-gray-500 truncate">{project.description[language]}</p>
-                      <div className="mt-2 flex justify-between items-center">
-                        <span className="text-sm font-medium text-purple-600">{project.price}</span>
-                        <div className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
-                          {translations.recentProjects.status[project.status][language]}
+            <nav className="space-y-2">
+              {navigationItems[userRole].map((item) => (
+                <button
+                  key={item.id}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg ${activeTab === item.id
+                    ? 'bg-purple-100 text-purple-600'
+                    : 'text-gray-600 hover:bg-gray-100'
+                    } ${language === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}
+                  onClick={() => setActiveTab(item.id)}
+                >
+                  <item.icon className="h-5 w-5 flex-shrink-0" />
+                  <span className="flex-1 truncate">{item.label}</span>
+                </button>
+              ))}
+            </nav>
+
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <Link
+                href="/dashboard/create-ad"
+                className={`w-full bg-purple-600 text-white flex items-center gap-2 px-4 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'
+                  }`}
+              >
+                <Package className="h-5 w-5 flex-shrink-0" />
+                <span className="flex-1 truncate">{translations.navigation.createAd[language]}</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 p-6">
+            {/* Overview Tab */}
+            {activeTab === 'overview' && (
+              <div>
+                <h1 className="text-2xl font-bold mb-6">{translations.navigation.overview[language]}</h1>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {stats.map(stat => (
+                    <div key={stat.id} className="bg-white p-6 rounded-lg shadow-md">
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="min-w-0">
+                          <p className="text-gray-500 text-sm mb-1 truncate">{stat.title}</p>
+                          <h3 className="text-2xl font-bold">{stat.value}</h3>
+                        </div>
+                        <div
+                          className={`p-3 rounded-full flex-shrink-0 ${stat.id === 'revenue'
+                            ? 'bg-green-100 text-green-600'
+                            : stat.id === 'projects'
+                              ? 'bg-blue-100 text-blue-600'
+                              : stat.id === 'pending'
+                                ? 'bg-yellow-100 text-yellow-600'
+                                : stat.id === 'completed'
+                                  ? 'bg-purple-100 text-purple-600'
+                                  : stat.id === 'clients'
+                                    ? 'bg-indigo-100 text-indigo-600'
+                                    : 'bg-orange-100 text-orange-600'
+                            }`}
+                        >
+                          <stat.icon className="h-6 w-6" />
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400 mt-1">{project.date}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Projects Tab */}
-          {activeTab === 'projects' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.navigation.projects[language]}</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {projects.map(project => (
-                  <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl">
-                    {/* Status Indicator */}
-                    <div className={`absolute top-2 right-2 px-2 py-1 text-xs font-semibold rounded-full`} style={{
-                      backgroundColor: project.status === 'new' ? '#DCFCE7' :
-                        project.status === 'inProgress' ? '#FEF9C3' :
-                          '#DBEAFE',
-                      color: project.status === 'new' ? 'green' :
-                        project.status === 'inProgress' ? 'orange' :
-                          'blue' // Change text color for completed status
-                    }}>
-                      {translations.recentProjects.status[project.status][language]}
-                    </div>
-                    {/* Image */}
-                    <Image
-                      src="/path/to/image.jpg" // Replace with the actual image path
-                      alt={project.title}
-                      width={400}
-                      height={250}
-                      className="w-full h-40 object-cover"
-                    />
-                    <div className="p-4">
-                      <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
-                      <p className="text-sm text-gray-500 mt-1">{project.description}</p>
-                      <p className="text-xs text-gray-400 mt-2">{project.date} - {project.date}</p>
-                      <div className="flex justify-between items-center mt-4">
-                        <span className="text-xl font-bold text-purple-600">{project.price}</span>
-                        <Link href={`/projects/${project.id}`} className="inline-block bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
-                          عرض التفاصيل
-                        </Link>
+                      <div className={`mt-4 text-sm flex items-center gap-1 ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
+                        <TrendingUp className={`h-4 w-4 flex-shrink-0 ${stat.changeType === 'negative' ? 'transform rotate-180' : ''}`} />
+                        <span className="truncate">{stat.change} {translations.timePeriod.sinceLastMonth[language]}</span>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                {/* Recent Projects */}
+                <h2 className="text-2xl font-bold mb-6">{translations.recentProjects.title[language]}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {recentProjects.map(project => (
+                    <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold text-gray-900 truncate">{project.title[language]}</h3>
+                        <p className="text-sm text-gray-500 truncate">{project.description[language]}</p>
+                        <div className="mt-2 flex justify-between items-center">
+                          <span className="text-sm font-medium text-purple-600">{project.price}</span>
+                          <div className={`px-2 py-1 text-xs font-semibold rounded-full ${project.statusColor}`}>
+                            {translations.recentProjects.status[project.status as 'new' | 'inProgress' | 'completed']?.[language] ?? project.status}
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-400 mt-1">{project.date}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Messages Tab */}
-          {activeTab === 'messages' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.navigation.messages[language]}</h1>
-
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                {messages.map(message => (
-                  <div
-                    key={message.id}
-                    className={`flex items-center p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer ${message.unread ? 'bg-purple-50' : ''
-                      }`}
-                  >
-                    <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4">
+            {/* Projects Tab */}
+            {activeTab === 'projects' && (
+              <div>
+                <h1 className="text-2xl font-bold mb-6">{translations.navigation.projects[language]}</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {projects.map(project => (
+                    <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl relative">
+                      {/* Status Indicator */}
+                      <div
+                        className="absolute top-2 right-2 px-2 py-1 text-xs font-semibold rounded-full"
+                        style={{
+                          backgroundColor: project.status === 'new' ? '#DCFCE7' : project.status === 'inProgress' ? '#FEF9C3' : '#DBEAFE',
+                          color: project.status === 'new' ? 'green' : project.status === 'inProgress' ? 'orange' : 'blue'
+                        }}
+                      >
+                        {translations.recentProjects.status[project.status as 'new' | 'inProgress' | 'completed']?.[language] ?? project.status}
+                      </div>
+                      {/* Image */}
                       <Image
-                        src={message.sender.avatar}
-                        alt={message.sender.name}
-                        fill
-                        className="object-cover"
+                        src="/path/to/image.jpg" // Replace with the actual image path
+                        alt={project.title}
+                        width={400}
+                        height={250}
+                        className="w-full h-40 object-cover"
                       />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-baseline">
-                        <h3 className="text-sm font-medium text-gray-900 truncate">{message.sender.name}</h3>
-                        <span className="text-xs text-gray-500">{message.time}</span>
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
+                        <p className="text-xs text-gray-400 mt-2">{project.date}</p>
+                        <div className="flex justify-between items-center mt-4">
+                          <span className="text-xl font-bold text-purple-600">{project.price}</span>
+                          <Link href={`/projects/${project.id}`} className="inline-block bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
+                            عرض التفاصيل
+                          </Link>
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-500 truncate">{message.preview}</p>
                     </div>
-                    {message.unread && (
-                      <div className="h-3 w-3 bg-purple-600 rounded-full ml-2"></div>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Profile Tab */}
-          {activeTab === 'profile' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.navigation.profile[language]}</h1>
-
-              <div className="bg-white rounded-lg shadow-md overflow-hidden p-6 mb-8">
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/3 mb-6 md:mb-0">
-                    <div className="relative h-48 w-48 rounded-full overflow-hidden mx-auto">
-                      <Image
-                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
-                        alt={translations.profile.profileImage[language]}
-                        fill
-                        className="object-cover"
-                      />
+            {/* Messages Tab */}
+            {activeTab === 'messages' && (
+              <div>
+                <h1 className="text-2xl font-bold mb-6">{translations.navigation.messages[language]}</h1>
+                <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                  {messages.map(message => (
+                    <div key={message.id} className={`flex items-center p-4 border-b border-gray-200 hover:bg-gray-50 cursor-pointer ${message.unread ? 'bg-purple-50' : ''}`}>
+                      <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4">
+                        <Image src={message.sender.avatar} alt={message.sender.name} fill className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-baseline">
+                          <h3 className="text-sm font-medium text-gray-900 truncate">{message.sender.name}</h3>
+                          <span className="text-xs text-gray-500">{message.time}</span>
+                        </div>
+                        <p className="text-sm text-gray-500 truncate">{message.preview}</p>
+                      </div>
+                      {message.unread && <div className="h-3 w-3 bg-purple-600 rounded-full ml-2"></div>}
                     </div>
-                    <div className="text-center mt-4">
-                      <h2 className="text-xl font-bold">{translations.profile.name[language]}</h2>
-                      <p className="text-gray-500">{translations.profile.email[language]}</p>
-                      <p className="text-sm text-gray-500 mt-1">{translations.profile.joinDate.value[language]}</p>
-                    </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                  <div className="md:w-2/3 md:pr-8">
-                    <h3 className="text-lg font-bold mb-4">{translations.profile.personalInfo.title[language]}</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                      <div>
-                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.fullName.label[language]}:</p>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            value={profileData.fullName}
-                            onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
-                          />
-                        ) : (
-                          <p className="font-medium">{profileData.fullName}</p>
-                        )}
+            {/* Profile Tab */}
+            {activeTab === 'profile' && (
+              <div>
+                <h1 className="text-2xl font-bold mb-6">{translations.navigation.profile[language]}</h1>
+                <div className="bg-white rounded-lg shadow-md overflow-hidden p-6 mb-8">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/3 mb-6 md:mb-0">
+                      <div className="relative h-48 w-48 rounded-full overflow-hidden mx-auto">
+                        <Image
+                          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80"
+                          alt={translations.profile.profileImage[language]}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                      <div>
-                        <p className="text-sm text-gray-500">{translations.profile.email[language]}:</p>
-                        {isEditing ? (
-                          <input
-                            type="email"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            value={profileData.email}
-                            onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                          />
-                        ) : (
-                          <p className="font-medium">{profileData.email}</p>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.phone.label[language]}:</p>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            value={profileData.phone}
-                            onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                          />
-                        ) : (
-                          <p className="font-medium">{profileData.phone}</p>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">{translations.profile.personalInfo.country.label[language]}:</p>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            value={profileData.country}
-                            onChange={(e) => setProfileData({ ...profileData, country: e.target.value })}
-                          />
-                        ) : (
-                          <p className="font-medium">{profileData.country}</p>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">{translations.profile.joinDate.label[language]}:</p>
-                        <p className="font-medium">{translations.profile.joinDate.value[language]}</p>
+                      <div className="text-center mt-4">
+                        <h2 className="text-xl font-bold">{translations.profile.name[language]}</h2>
+                        <p className="text-gray-500">{translations.profile.email[language]}</p>
+                        <p className="text-sm text-gray-500 mt-1">{translations.profile.joinDate.value[language]}</p>
                       </div>
                     </div>
-
-                    <h3 className="text-lg font-bold mb-4">{translations.profile.ratings.title[language]}</h3>
-                    <div className="flex items-center mb-6">
-                      <div className="flex text-yellow-400">
-                        {[1, 2, 3, 4].map(star => (
-                          <Star key={star} className="h-5 w-5 fill-current" />
-                        ))}
-                        <Star className="h-5 w-5" />
+                    <div className="md:w-2/3 md:pr-8">
+                      <h3 className="text-lg font-bold mb-4">{translations.profile.personalInfo.title[language]}</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <p className="text-sm text-gray-500">
+                            {translations.profile.personalInfo.fullName.label[language]}:
+                          </p>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                              value={profileData.fullName}
+                              onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
+                            />
+                          ) : (
+                            <p className="font-medium">{profileData.fullName}</p>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">{translations.profile.email[language]}:</p>
+                          {isEditing ? (
+                            <input
+                              type="email"
+                              className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                              value={profileData.email}
+                              onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                            />
+                          ) : (
+                            <p className="font-medium">{profileData.email}</p>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">{translations.profile.personalInfo.phone.label[language]}:</p>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                              value={profileData.phone}
+                              onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                            />
+                          ) : (
+                            <p className="font-medium">{profileData.phone}</p>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">{translations.profile.personalInfo.country.label[language]}:</p>
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              className="w-full border border-gray-300 rounded-md py-2 px-3 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                              value={profileData.country}
+                              onChange={(e) => setProfileData({ ...profileData, country: e.target.value })}
+                            />
+                          ) : (
+                            <p className="font-medium">{profileData.country}</p>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-500">{translations.profile.joinDate.label[language]}:</p>
+                          <p className="font-medium">{translations.profile.joinDate.value[language]}</p>
+                        </div>
                       </div>
-                      <span className="text-gray-500 ml-2">{translations.profile.ratings.value}</span>
-                    </div>
 
-                    <div className="flex gap-3">
-                      {isEditing ? (
-                        <>
+                      <h3 className="text-lg font-bold mb-4">{translations.profile.ratings.title[language]}</h3>
+                      <div className="flex items-center mb-6">
+                        <div className="flex text-yellow-400">
+                          {[1, 2, 3, 4].map(star => (
+                            <Star key={star} className="h-5 w-5 fill-current" />
+                          ))}
+                          <Star className="h-5 w-5" />
+                        </div>
+                        <span className="text-gray-500 ml-2">{translations.profile.ratings.value}</span>
+                      </div>
+
+                      <div className="flex gap-3">
+                        {isEditing ? (
+                          <>
+                            <button
+                              onClick={handleSave}
+                              className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
+                            >
+                              {translations.profile.userSettings.saveChanges[language]}
+                            </button>
+                            <button
+                              onClick={handleCancel}
+                              className="bg-gray-100 text-gray-600 px-6 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors"
+                            >
+                              {language === 'ar' ? 'إلغاء' : language === 'fr' ? 'Annuler' : 'Cancel'}
+                            </button>
+                          </>
+                        ) : (
                           <button
-                            onClick={handleSave}
+                            onClick={() => setIsEditing(true)}
                             className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
                           >
-                            {translations.profile.userSettings.saveChanges[language]}
+                            {translations.profile.editButton[language]}
                           </button>
-                          <button
-                            onClick={handleCancel}
-                            className="bg-gray-100 text-gray-600 px-6 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors"
-                          >
-                            {language === 'ar' ? 'إلغاء' : language === 'fr' ? 'Annuler' : 'Cancel'}
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          onClick={() => setIsEditing(true)}
-                          className="bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors"
-                        >
-                          {translations.profile.editButton[language]}
-                        </button>
-                      )}
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Settings Tab */}
-          {activeTab === 'settings' && (
-            <div>
-              <h1 className="text-2xl font-bold mb-6">{translations.navigation.settings[language]}</h1>
-
-              <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
-                <div>
-                  <h3 className="text-lg font-bold mb-4">{translations.settings.password.title[language]}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">
-                        {translations.settings.password.change[language]}
-                      </label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder={translations.settings.password.changePlaceholder[language]}
-                      />
+            {/* Settings Tab */}
+            {activeTab === 'settings' && (
+              <div>
+                <h1 className="text-2xl font-bold mb-6">{translations.navigation.settings[language]}</h1>
+                <div className="bg-white rounded-lg shadow-md overflow-hidden p-6">
+                  <div>
+                    <h3 className="text-lg font-bold mb-4">{translations.settings.password.title[language]}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm text-gray-500 mb-1">
+                          {translations.settings.password.change[language]}
+                        </label>
+                        <input
+                          type="password"
+                          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                          placeholder={translations.settings.password.changePlaceholder[language]}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-gray-500 mb-1">
+                          {translations.settings.password.confirm[language]}
+                        </label>
+                        <input
+                          type="password"
+                          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                          placeholder={translations.settings.password.confirmPlaceholder[language]}
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm text-gray-500 mb-1">
-                        {translations.settings.password.confirm[language]}
-                      </label>
-                      <input
-                        type="password"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                        placeholder={translations.settings.password.confirmPlaceholder[language]}
-                      />
-                    </div>
+                    <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
+                      {translations.settings.password.update[language]}
+                    </button>
                   </div>
-                  <button className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-                    {translations.settings.password.update[language]}
-                  </button>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
