@@ -3,7 +3,7 @@
   import { useState } from 'react';
   import Image from 'next/image';
   import Link from 'next/link';
-  import { Upload, X, Plus, DollarSign } from 'lucide-react';
+  import { Upload, X } from 'lucide-react';
 
   export default function CreateAd() {
     const [title, setTitle] = useState('');

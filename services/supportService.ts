@@ -10,10 +10,21 @@ export const supportService = {
     category: string;
     priority: string;
   }) {
-    return fetcher(`${API_URL}/support/tickets`, {
-      method: 'POST',
-      body: ticketData,
-    });
+    try {
+      const response = await fetcher(`${API_URL}/support/tickets`, {
+        method: 'POST',
+        body: ticketData,
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to create ticket: ${response.statusText}`);
+      }
+      
+      return response;
+    } catch (error) {
+      console.error('Create ticket error:', error);
+      throw error;
+    }
   },
 
   async getTickets(filters?: {
@@ -23,23 +34,42 @@ export const supportService = {
     page?: number;
     limit?: number;
   }) {
-    const params = new URLSearchParams();
-    if (filters?.status) params.append('status', filters.status);
-    if (filters?.priority) params.append('priority', filters.priority);
-    if (filters?.category) params.append('category', filters.category);
-    if (filters?.page) params.append('page', filters.page.toString());
-    if (filters?.limit) params.append('limit', filters.limit.toString());
+    try {
+      const params = new URLSearchParams();
+      if (filters?.status) params.append('status', filters.status);
+      if (filters?.priority) params.append('priority', filters.priority);
+      if (filters?.category) params.append('category', filters.category);
+      if (filters?.page) params.append('page', filters.page.toString());
+      if (filters?.limit) params.append('limit', filters.limit.toString());
 
-    return fetcher(`${API_URL}/support/tickets?${params.toString()}`);
+      const response = await fetcher(`${API_URL}/support/tickets?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error(`Failed to get tickets: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      console.error('Get tickets error:', error);
+      throw error;
+    }
   },
 
   async getTicket(ticketId: string) {
-    const response = await fetch(`${API_URL}/support/tickets/${ticketId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/support/tickets/${ticketId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get ticket: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get ticket error:', error);
+      throw error;
+    }
   },
 
   async updateTicket(ticketId: string, updateData: {
@@ -47,15 +77,25 @@ export const supportService = {
     priority?: string;
     assignee?: string;
   }) {
-    const response = await fetch(`${API_URL}/support/tickets/${ticketId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(updateData),
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/support/tickets/${ticketId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(updateData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to update ticket: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Update ticket error:', error);
+      throw error;
+    }
   },
 
   // Ticket messages
@@ -63,54 +103,110 @@ export const supportService = {
     content: string;
     attachments?: File[];
   }) {
-    const formData = new FormData();
-    formData.append('content', messageData.content);
-    if (messageData.attachments) {
-      messageData.attachments.forEach(file => {
-        formData.append('attachments', file);
-      });
-    }
+    try {
+      const formData = new FormData();
+      formData.append('content', messageData.content);
+      if (messageData.attachments) {
+        messageData.attachments.forEach(file => {
+          formData.append('attachments', file);
+        });
+      }
 
-    const response = await fetch(`${API_URL}/support/tickets/${ticketId}/messages`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: formData,
-    });
-    return response.json();
-  },
-
-  async getMessages(ticketId: string, page = 1, limit = 50) {
-    const response = await fetch(
-      `${API_URL}/support/tickets/${ticketId}/messages?page=${page}&limit=${limit}`,
-      {
+      const response = await fetch(`${API_URL}/support/tickets/${ticketId}/messages`, {
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to add message: ${response.statusText}`);
       }
-    );
-    return response.json();
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Add message error:', error);
+      throw error;
+    }
+  },
+
+  async getMessages(ticketId: string, page = 1, limit = 50) {
+    try {
+      const response = await fetch(
+        `${API_URL}/support/tickets/${ticketId}/messages?page=${page}&limit=${limit}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get messages: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get messages error:', error);
+      throw error;
+    }
   },
 
   // FAQ and knowledge base
   async getFaqCategories() {
-    return fetcher(`${API_URL}/support/faq/categories`);
+    try {
+      const response = await fetcher(`${API_URL}/support/faq/categories`);
+      if (!response.ok) {
+        throw new Error(`Failed to get FAQ categories: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      console.error('Get FAQ categories error:', error);
+      throw error;
+    }
   },
 
   async getFaqs(categoryId?: string) {
-    const url = categoryId
-      ? `${API_URL}/support/faq?category=${categoryId}`
-      : `${API_URL}/support/faq`;
-    return fetcher(url);
+    try {
+      const url = categoryId
+        ? `${API_URL}/support/faq?category=${categoryId}`
+        : `${API_URL}/support/faq`;
+      const response = await fetcher(url);
+      if (!response.ok) {
+        throw new Error(`Failed to get FAQs: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      console.error('Get FAQs error:', error);
+      throw error;
+    }
   },
 
   async searchKnowledgeBase(query: string) {
-    return fetcher(`${API_URL}/support/knowledge-base/search?q=${query}`);
+    try {
+      const response = await fetcher(`${API_URL}/support/knowledge-base/search?q=${query}`);
+      if (!response.ok) {
+        throw new Error(`Failed to search knowledge base: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      console.error('Search knowledge base error:', error);
+      throw error;
+    }
   },
 
   // Support metrics
   async getSupportMetrics(timeRange: string = '30d') {
-    return fetcher(`${API_URL}/support/metrics?timeRange=${timeRange}`);
+    try {
+      const response = await fetcher(`${API_URL}/support/metrics?timeRange=${timeRange}`);
+      if (!response.ok) {
+        throw new Error(`Failed to get support metrics: ${response.statusText}`);
+      }
+      return response;
+    } catch (error) {
+      console.error('Get support metrics error:', error);
+      throw error;
+    }
   },
 }; 

@@ -8,15 +8,25 @@ export const paymentService = {
     paymentMethod: string;
     description?: string;
   }) {
-    const response = await fetch(`${API_URL}/payments/process`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(paymentData),
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/payments/process`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(paymentData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to process payment: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Process payment error:', error);
+      throw error;
+    }
   },
 
   // Transaction history
@@ -26,18 +36,28 @@ export const paymentService = {
     status?: string;
     type?: string;
   }) {
-    const params = new URLSearchParams();
-    if (filters?.startDate) params.append('startDate', filters.startDate);
-    if (filters?.endDate) params.append('endDate', filters.endDate);
-    if (filters?.status) params.append('status', filters.status);
-    if (filters?.type) params.append('type', filters.type);
+    try {
+      const params = new URLSearchParams();
+      if (filters?.startDate) params.append('startDate', filters.startDate);
+      if (filters?.endDate) params.append('endDate', filters.endDate);
+      if (filters?.status) params.append('status', filters.status);
+      if (filters?.type) params.append('type', filters.type);
 
-    const response = await fetch(`${API_URL}/transactions?${params.toString()}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+      const response = await fetch(`${API_URL}/transactions?${params.toString()}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get transaction history: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get transaction history error:', error);
+      throw error;
+    }
   },
 
   // Withdrawal requests
@@ -47,56 +67,106 @@ export const paymentService = {
     paymentMethod: string;
     accountDetails: any;
   }) {
-    const response = await fetch(`${API_URL}/withdrawals`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(withdrawalData),
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/withdrawals`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(withdrawalData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to request withdrawal: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Request withdrawal error:', error);
+      throw error;
+    }
   },
 
   async getWithdrawalHistory() {
-    const response = await fetch(`${API_URL}/withdrawals`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/withdrawals`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get withdrawal history: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get withdrawal history error:', error);
+      throw error;
+    }
   },
 
   // Payment methods
   async getPaymentMethods() {
-    const response = await fetch(`${API_URL}/payment-methods`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/payment-methods`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get payment methods: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get payment methods error:', error);
+      throw error;
+    }
   },
 
   async addPaymentMethod(paymentMethodData: any) {
-    const response = await fetch(`${API_URL}/payment-methods`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(paymentMethodData),
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/payment-methods`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(paymentMethodData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to add payment method: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Add payment method error:', error);
+      throw error;
+    }
   },
 
   async removePaymentMethod(paymentMethodId: string) {
-    const response = await fetch(`${API_URL}/payment-methods/${paymentMethodId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/payment-methods/${paymentMethodId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to remove payment method: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Remove payment method error:', error);
+      throw error;
+    }
   },
 
   // Invoice generation
@@ -106,23 +176,43 @@ export const paymentService = {
     description: string;
     recipientEmail: string;
   }) {
-    const response = await fetch(`${API_URL}/invoices`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(invoiceData),
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/invoices`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(invoiceData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to generate invoice: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Generate invoice error:', error);
+      throw error;
+    }
   },
 
   async getInvoices() {
-    const response = await fetch(`${API_URL}/invoices`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    try {
+      const response = await fetch(`${API_URL}/invoices`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to get invoices: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Get invoices error:', error);
+      throw error;
+    }
   },
 }; 

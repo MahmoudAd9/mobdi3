@@ -2,6 +2,14 @@
 
 A modern web application built with Next.js that facilitates collaboration between content creators and brands. This platform provides a seamless experience for managing partnerships, campaigns, and communications.
 
+## 📝 Project Description
+
+Mobdi3 is a comprehensive platform designed to bridge the gap between content creators and brands, enabling seamless collaboration and partnership management. The platform offers a robust set of features including creator discovery, campaign management, real-time communication, and performance analytics. Built with modern web technologies, Mobdi3 provides an intuitive interface for both creators and brands to connect, collaborate, and grow their partnerships effectively.
+
+## 👨‍💻 Author
+
+Mahmoud 
+
 ## 🚀 Features
 
 - **User Authentication**

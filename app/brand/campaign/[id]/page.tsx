@@ -1,89 +1,74 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, DollarSign, Users, Package, Clock, CheckCircle, X, MessageSquare, Edit, Trash2, Star } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import Loading from '@/components/Loading';
 
 export default function CampaignDetails({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState('overview');
-  
-  // Mock data for a campaign
-  const campaign = {
-    id: params.id,
-    title: 'سماعة لاسلكية جديدة',
-    image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-    category: 'tech',
-    status: 'active',
-    budget: '$200',
-    startDate: '2025-04-15',
-    endDate: '2025-04-30',
-    description: 'نبحث عن مراجعة تفصيلية لسماعة لاسلكية جديدة مع التركيز على جودة الصوت وعمر البطارية. يجب أن تتضمن المراجعة اختبار السماعة في بيئات مختلفة وتقييم جودة الميكروفون أثناء المكالمات.',
-    requirements: [
-      'تجربة السماعة لمدة لا تقل عن 3 أيام',
-      'اختبار جودة الصوت في بيئات مختلفة (هادئة، صاخبة)',
-      'قياس عمر البطارية الفعلي',
-      'تقييم جودة الميكروفون أثناء المكالمات',
-      'مقارنة مختصرة مع سماعات منافسة (إن أمكن)',
-    ],
-    creators: [
-      {
-        id: 1,
-        name: 'أحمد محمد',
-        image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-        status: 'active',
-        progress: 70,
-        rating: 4.8,
-        deadline: '2025-04-25',
-      },
-      {
-        id: 2,
-        name: 'سارة أحمد',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-        status: 'pending',
-        progress: 30,
-        rating: 4.9,
-        deadline: '2025-04-28',
-      },
-      {
-        id: 3,
-        name: 'محمد علي',
-        image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-        status: 'completed',
-        progress: 100,
-        rating: 4.7,
-        deadline: '2025-04-22',
-      },
-    ],
-    applications: [
-      {
-        id: 1,
-        creator: {
-          id: 4,
-          name: 'نورا خالد',
-          image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-          rating: 4.6,
-          followers: '200K',
-        },
-        proposal: 'أستطيع تقديم مراجعة شاملة للسماعة مع التركيز على جودة الصوت وعمر البطارية. لدي خبرة في مراجعة منتجات مشابهة وجمهور مهتم بالتكنولوجيا.',
-        price: '$220',
-        date: '2025-04-16',
-      },
-      {
-        id: 2,
-        creator: {
-          id: 5,
-          name: 'خالد الناصري',
-          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-          rating: 4.5,
-          followers: '150K',
-        },
-        proposal: 'يمكنني تقديم مراجعة تفصيلية للسماعة مع مقارنتها بسماعات أخرى في نفس الفئة السعرية. سأركز على جودة الصوت وعمر البطارية والراحة أثناء الاستخدام.',
-        price: '$200',
-        date: '2025-04-17',
-      },
-    ],
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [campaign, setCampaign] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchCampaignData = async () => {
+      try {
+        setIsLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setCampaign({
+          id: params.id,
+          title: 'حملة تسويقية للمنتجات الجديدة',
+          status: 'active',
+          startDate: '2024-04-01',
+          endDate: '2024-04-30',
+          budget: '5000$',
+          description: 'حملة تسويقية للمنتجات الجديدة في السوق المحلي',
+          creators: [
+            {
+              id: 1,
+              name: 'أحمد محمد',
+              image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+              status: 'active',
+              progress: 70,
+              rating: 4.8,
+              deadline: '2025-04-25',
+            },
+            {
+              id: 2,
+              name: 'سارة أحمد',
+              image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+              status: 'pending',
+              progress: 30,
+              rating: 4.9,
+              deadline: '2025-04-28',
+            },
+            {
+              id: 3,
+              name: 'محمد علي',
+              image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+              status: 'completed',
+              progress: 100,
+              rating: 4.7,
+              deadline: '2025-04-22',
+            },
+          ]
+        });
+      } catch (error) {
+        console.error('Error fetching campaign data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCampaignData();
+  }, [params.id]);
+
+  if (isLoading) {
+    return <Loading size="lg" />;
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {

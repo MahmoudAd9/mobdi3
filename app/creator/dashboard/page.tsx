@@ -18,22 +18,22 @@ import {
   User
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import Loading from '@/components/Loading';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState<'brand' | 'creator'>('brand');
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     fullName: '',
-    email: 'asma@gmail.com',
-    phone: '+51 966 696 123',
+    email: '',
+    phone: '',
     country: ''
   });
 
   const { language: rawLanguage } = useLanguage();
   const language = ['ar', 'en', 'fr'].includes(rawLanguage) ? rawLanguage : 'en';
-
-
 
   const translations = {
     navigation: {
@@ -269,13 +269,30 @@ export default function Dashboard() {
 
   // Initialize profile data when the language changes.
   useEffect(() => {
-    setProfileData({
-      fullName: translations.profile.name[language],
-      email: 'asma@gmail.com',
-      phone: translations.profile.personalInfo.phone.value,
-      country: translations.profile.personalInfo.country.value[language]
-    });
+    const fetchProfileData = async () => {
+      try {
+        setIsLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setProfileData({
+          fullName: translations.profile.name[language],
+          email: 'asma@gmail.com',
+          phone: translations.profile.personalInfo.phone.value,
+          country: translations.profile.personalInfo.country.value[language]
+        });
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfileData();
   }, [language]);
+
+  if (isLoading) {
+    return <Loading size="lg" />;
+  }
 
   const handleSave = () => {
     setIsEditing(false);

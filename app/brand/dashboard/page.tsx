@@ -15,13 +15,16 @@ import {
   CheckCircle,
   X,
   Building2,
-  Settings
+  Settings,
+  User
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import Loading from '@/components/Loading';
 
 export default function BrandDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { language } = useLanguage();
 
   const translations = {
@@ -340,20 +343,34 @@ export default function BrandDashboard() {
   }
 
   const [profileData, setProfileData] = useState({
-    companyName: 'COD Network',
-    email: 'asma@gmail.com',
-    phone: '+51 966 696 123',
-    country: translations.companyInfo.country.value[language],
-    description: translations.companyDescription.content[language]
+    companyName: '',
+    email: '',
+    phone: '',
+    country: '',
+    description: ''
   });
 
-  // Update profile data when language changes
   useEffect(() => {
-    setProfileData(prevData => ({
-      ...prevData,
-      country: translations.companyInfo.country.value[language],
-      description: translations.companyDescription.content[language]
-    }));
+    const fetchProfileData = async () => {
+      try {
+        setIsLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setProfileData({
+          companyName: 'COD Network',
+          email: 'asma@gmail.com',
+          phone: '+51 966 696 123',
+          country: translations.companyInfo.country.value[language],
+          description: translations.companyDescription.content[language]
+        });
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfileData();
   }, [language]);
 
   const handleSave = () => {
@@ -365,11 +382,11 @@ export default function BrandDashboard() {
     setIsEditing(false);
     // Reset the form data to original values
     setProfileData({
-      companyName: 'COD Network',
-      email: 'asma@gmail.com',
-      phone: '+51 966 696 123',
-      country: translations.companyInfo.country.value[language],
-      description: translations.companyDescription.content[language]
+      companyName: '',
+      email: '',
+      phone: '',
+      country: '',
+      description: ''
     });
   };
 
@@ -520,6 +537,10 @@ export default function BrandDashboard() {
   const getStatusText = (status: ProjectStatus) => {
     return translations.recentProjects.statuses[status][language];
   };
+
+  if (isLoading) {
+    return <Loading size="lg" />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

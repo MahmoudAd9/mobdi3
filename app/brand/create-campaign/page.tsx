@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Upload, X, Plus, DollarSign, ArrowLeft } from 'lucide-react';
+import { Upload, X, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function CreateCampaign() {

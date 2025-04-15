@@ -1,15 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search, Star, Filter, CheckCircle, X, Clock, ArrowLeft } from 'lucide-react';
+import Loading from '@/components/Loading';
 
 export default function FindCreators() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 500]);
   const [showFilters, setShowFilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [creators, setCreators] = useState<any[]>([]);
   
   const categories = [
     { id: 'all', name: 'الكل' },
@@ -20,76 +23,95 @@ export default function FindCreators() {
     { id: 'fitness', name: 'اللياقة البدنية' },
     { id: 'gaming', name: 'الألعاب' },
   ];
-  
-  const creators = [
-    {
-      id: 1,
-      name: 'أحمد محمد',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'tech',
-      rating: 4.8,
-      followers: '120K',
-      price: '200$',
-      description: 'متخصص في مراجعة المنتجات التقنية والإلكترونيات الحديثة',
-      verified: true,
-    },
-    {
-      id: 2,
-      name: 'سارة أحمد',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'beauty',
-      rating: 4.9,
-      followers: '250K',
-      price: '300$',
-      description: 'خبيرة في منتجات العناية بالبشرة والمكياج',
-      verified: true,
-    },
-    {
-      id: 3,
-      name: 'محمد علي',
-      image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'fitness',
-      rating: 4.7,
-      followers: '180K',
-      price: '250$',
-      description: 'مدرب لياقة بدنية ومتخصص في مراجعة منتجات الرياضة',
-      verified: true,
-    },
-    {
-      id: 4,
-      name: 'نورا خالد',
-      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'fashion',
-      rating: 4.6,
-      followers: '200K',
-      price: '280$',
-      description: 'مؤثرة في مجال الموضة والأزياء',
-      verified: false,
-    },
-    {
-      id: 5,
-      name: 'خالد الناصري',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'food',
-      rating: 4.5,
-      followers: '150K',
-      price: '220$',
-      description: 'طاهي محترف ومراجع للمنتجات الغذائية',
-      verified: true,
-    },
-    {
-      id: 6,
-      name: 'ليلى عمر',
-      image: 'https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
-      category: 'gaming',
-      rating: 4.7,
-      followers: '300K',
-      price: '320$',
-      description: 'لاعبة محترفة ومراجعة لأحدث الألعاب والأجهزة',
-      verified: false,
-    },
-  ];
-  
+
+  useEffect(() => {
+    const fetchCreators = async () => {
+      try {
+        setIsLoading(true);
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setCreators([
+          {
+            id: 1,
+            name: 'أحمد محمد',
+            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'tech',
+            rating: 4.8,
+            followers: '200K',
+            price: '250$',
+            description: 'مراجع محترف للأجهزة الإلكترونية والتكنولوجيا',
+            verified: true,
+          },
+          {
+            id: 2,
+            name: 'سارة أحمد',
+            image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'beauty',
+            rating: 4.9,
+            followers: '180K',
+            price: '300$',
+            description: 'خبيرة تجميل ومراجعة للمنتجات التجميلية',
+            verified: true,
+          },
+          {
+            id: 3,
+            name: 'محمد علي',
+            image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'fashion',
+            rating: 4.7,
+            followers: '250K',
+            price: '280$',
+            description: 'خبير موضة ومراجعة للملابس والإكسسوارات',
+            verified: false,
+          },
+          {
+            id: 4,
+            name: 'نورا خالد',
+            image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'fitness',
+            rating: 4.6,
+            followers: '150K',
+            price: '200$',
+            description: 'مدربة لياقة بدنية ومراجعة للمكملات الرياضية',
+            verified: true,
+          },
+          {
+            id: 5,
+            name: 'خالد الناصري',
+            image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'food',
+            rating: 4.5,
+            followers: '150K',
+            price: '220$',
+            description: 'طاهي محترف ومراجع للمنتجات الغذائية',
+            verified: true,
+          },
+          {
+            id: 6,
+            name: 'ليلى عمر',
+            image: 'https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80',
+            category: 'gaming',
+            rating: 4.7,
+            followers: '300K',
+            price: '320$',
+            description: 'لاعبة محترفة ومراجعة لأحدث الألعاب والأجهزة',
+            verified: false,
+          },
+        ]);
+      } catch (error) {
+        console.error('Error fetching creators:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCreators();
+  }, []);
+
+  if (isLoading) {
+    return <Loading size="lg" />;
+  }
+
   const filteredCreators = creators.filter(creator => {
     const matchesSearch = creator.name.includes(searchTerm) || 
                           creator.description.includes(searchTerm);
